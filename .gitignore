@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+.venv/
+venv/
+
+# Local application state and uploaded data
+data/
+uploads/
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.tsv
+*.xlsx
+*.xls
+!sample_data/synthetic_patient_outcomes.csv
+
+# Secrets and editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+.vscode/
+.idea/
