@@ -1,0 +1,13 @@
+age,bmi,smoker,condition,risk_label,length_of_stay
+45,27.1,no,hypertension,medium,3
+67,31.4,yes,diabetes,high,7
+29,22.0,no,none,low,1
+54,29.8,no,hypertension,medium,4
+71,33.0,yes,diabetes,high,8
+38,25.2,no,asthma,low,2
+62,30.1,no,diabetes,high,6
+49,28.3,yes,hypertension,high,5
+33,23.9,no,none,low,1
+58,32.2,yes,diabetes,high,7
+41,26.7,no,asthma,low,2
+76,34.1,yes,hypertension,high,9
