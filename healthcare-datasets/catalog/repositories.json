@@ -1,0 +1,228 @@
+[
+ {
+  "repository": "Kaggle",
+  "url": "https://www.kaggle.com/datasets",
+  "role": "primary (brief list #1)",
+  "programmatic_access": "Kaggle API / `kaggle` CLI (requires account + API token in ~/.kaggle/kaggle.json); competitions require rules acceptance",
+  "access_model": "Account required for downloads; per-dataset licence set by uploader (often re-uploads of other sources)",
+  "search_method": "Landing pages of known datasets/competitions checked via web fetch; uploader-provided provenance recorded and canonical source preferred",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "kaggle"
+  ]
+ },
+ {
+  "repository": "MIMIC family (on PhysioNet)",
+  "url": "https://physionet.org/content/mimiciv/",
+  "role": "primary (#6)",
+  "programmatic_access": "PhysioNet credentialed download, Google BigQuery (physionet-data), AWS open data (credentialed)",
+  "access_model": "Credentialed: PhysioNet account, identity check, CITI 'Data or Specimens Only Research' training, signed DUA",
+  "search_method": "Landing page fetched (version, licence, size)",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "mimic"
+  ]
+ },
+ {
+  "repository": "PhysioNet",
+  "url": "https://physionet.org/",
+  "role": "primary (#2)",
+  "programmatic_access": "HTTPS/wget per project (`wget -r -N -c -np https://physionet.org/files/<slug>/<ver>/`), `wfdb` Python package; SHA256SUMS.txt per project",
+  "access_model": "Open (ODC/CC licences), restricted (click-through DUA) or credentialed (CITI training + signed DUA) per project",
+  "search_method": "Project landing pages (content/<slug>/<version>) fetched for licence, access policy, size, version",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "physionet"
+  ]
+ },
+ {
+  "repository": "UCI Machine Learning Repository",
+  "url": "https://archive.ics.uci.edu/",
+  "role": "primary (#3)",
+  "programmatic_access": "Metadata API https://archive.ics.uci.edu/api/dataset?id=<id>; static zip https://archive.ics.uci.edu/static/public/<id>/<slug>.zip; `ucimlrepo` package",
+  "access_model": "Open; most datasets CC BY 4.0 (stated per dataset)",
+  "search_method": "Metadata API JSON + landing page per dataset id",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "uci",
+   "archive.ics.uci.edu"
+  ]
+ },
+ {
+  "repository": "NIH / NLM (incl. NCBI)",
+  "url": "https://www.nlm.nih.gov/",
+  "role": "primary (#4)",
+  "programmatic_access": "NCBI E-utilities, FTP (ftp.ncbi.nlm.nih.gov), UMLS Terminology Services API (licence key)",
+  "access_model": "Mix: open (PubMed baseline, MeSH, GEO), licence agreement (UMLS, SNOMED CT via UMLS)",
+  "search_method": "Official download/terms pages fetched",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "nlm",
+   "ncbi",
+   "nih clinical center",
+   "pubmed",
+   "pmc"
+  ]
+ },
+ {
+  "repository": "The Cancer Imaging Archive (TCIA)",
+  "url": "https://www.cancerimagingarchive.net/",
+  "role": "primary (#5)",
+  "programmatic_access": "NBIA Data Retriever, TCIA REST API / `tcia_utils`",
+  "access_model": "Most collections open (CC BY 3.0/4.0); some limited-access collections need a TCIA account and DUA",
+  "search_method": "Collection landing pages fetched for licence, counts, DOI",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "tcia",
+   "cancerimagingarchive"
+  ]
+ },
+ {
+  "repository": "WHO Data / Global Health Observatory",
+  "url": "https://data.who.int/",
+  "role": "primary (#7)",
+  "programmatic_access": "GHO OData API https://ghoapi.azureedge.net/api/",
+  "access_model": "Open; WHO terms of use / CC BY-NC-SA 3.0 IGO stated on many WHO data products",
+  "search_method": "API root and portal pages fetched",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "who",
+   "world health organization"
+  ]
+ },
+ {
+  "repository": "CDC Data (data.cdc.gov, NCHS, WONDER)",
+  "url": "https://data.cdc.gov/",
+  "role": "primary (#8)",
+  "programmatic_access": "Socrata SODA API (https://data.cdc.gov/resource/<id>.json), metadata /api/views/<id>.json; NHANES/BRFSS file downloads; WONDER web/API with data use restrictions",
+  "access_model": "Open public-domain US government data, with WONDER/NCHS data-use restrictions on re-identification",
+  "search_method": "Socrata metadata endpoints and program pages fetched",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "cdc",
+   "nchs",
+   "atsdr"
+  ]
+ },
+ {
+  "repository": "Open Government Data Platform India (data.gov.in)",
+  "url": "https://data.gov.in/",
+  "role": "primary (#9)",
+  "programmatic_access": "data.gov.in API (free API key after registration); CSV/XLS resource downloads",
+  "access_model": "Government Open Data License - India (GODL); API key for programmatic access",
+  "search_method": "Catalogue/resource pages fetched",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "data.gov.in",
+   "nfhs",
+   "hmis",
+   "mohfw",
+   "rchiips"
+  ]
+ },
+ {
+  "repository": "OpenML",
+  "url": "https://www.openml.org/",
+  "role": "primary (#10)",
+  "programmatic_access": "REST API https://www.openml.org/api/v1/json/data/<id> (includes md5 checksum), `openml` Python package, sklearn `fetch_openml`",
+  "access_model": "Open; licence per dataset (often 'Public' or CC0/CC BY)",
+  "search_method": "JSON data description API per id",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "openml"
+  ]
+ },
+ {
+  "repository": "Hugging Face Datasets",
+  "url": "https://huggingface.co/datasets",
+  "role": "primary (#11)",
+  "programmatic_access": "Hub API https://huggingface.co/api/datasets/<repo>, `datasets` / `huggingface_hub` packages; gated datasets need a token + acceptance",
+  "access_model": "Per-dataset licence in the card; some gated",
+  "search_method": "Hub API + dataset cards fetched",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "hugging face",
+   "huggingface"
+  ]
+ },
+ {
+  "repository": "Harvard Dataverse",
+  "url": "https://dataverse.harvard.edu/",
+  "role": "primary (#12)",
+  "programmatic_access": "Dataverse native API (/api/datasets/:persistentId/?persistentId=doi:...), per-file MD5 in metadata",
+  "access_model": "Per-dataset terms (CC0 default; some with custom terms or guestbook)",
+  "search_method": "Dataset page + native API JSON",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "dataverse"
+  ]
+ },
+ {
+  "repository": "Zenodo",
+  "url": "https://zenodo.org/",
+  "role": "primary (#13)",
+  "programmatic_access": "REST API https://zenodo.org/api/records/<id> (per-file md5 checksums)",
+  "access_model": "Per-record licence; open or restricted records",
+  "search_method": "Record API JSON / landing page",
+  "container_reachable_2026_10_04": "No (proxy 403)",
+  "match": [
+   "zenodo"
+  ]
+ },
+ {
+  "repository": "Other authoritative sources (expanded search)",
+  "url": "Various",
+  "role": "expansion",
+  "programmatic_access": "Synapse client, Grand Challenge, GDC API, RCSB/PDBe APIs, ChEMBL API, UniProt REST, cBioPortal API, GitHub, figshare, Mendeley Data, IEEE DataPort, Stanford AIMI, LONI IDA, BioLINCC, SEER*Stat, IHME GHDx, DHS Program",
+  "access_model": "Varies per source; see each dataset row",
+  "search_method": "Canonical landing pages fetched",
+  "container_reachable_2026_10_04": "GitHub raw only; others No (proxy 403)",
+  "match": [
+   "synapse",
+   "grand-challenge",
+   "gdc",
+   "rcsb",
+   "alphafold",
+   "chembl",
+   "uniprot",
+   "cbioportal",
+   "github",
+   "figshare",
+   "mendeley",
+   "ieee",
+   "stanford",
+   "loni",
+   "adni",
+   "biolincc",
+   "seer",
+   "ihme",
+   "dhs",
+   "isic",
+   "bindingdb",
+   "drugbank",
+   "moleculenet",
+   "tdc",
+   "therapeutics data commons",
+   "pubchem",
+   "string",
+   "reactome",
+   "kegg",
+   "temple",
+   "tuh",
+   "synthea",
+   "wustl",
+   "oasis",
+   "bioasq",
+   "dbmi",
+   "snomed",
+   "loinc",
+   "world bank",
+   "epa",
+   "our world in data",
+   "allen",
+   "mtsamples",
+   "biocreative",
+   "tripod"
+  ]
+ }
+]
