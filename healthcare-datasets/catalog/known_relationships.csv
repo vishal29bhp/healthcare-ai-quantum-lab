@@ -1,0 +1,17 @@
+dataset_id_a,dataset_id_b,relationship,basis
+CLN-013,CLN-012,subset/demo,MIMIC-IV demo is a 100-patient open subset of MIMIC-IV (PhysioNet project pages)
+NLP-003,CLN-012,linked module,MIMIC-IV-Note links to MIMIC-IV patients; same credentialing (PhysioNet project pages)
+TS-011,CLN-012,linked module,MIMIC-IV Waveform is part of the MIMIC-IV family; linkage scope per PhysioNet page
+IMG-009,CLN-012,linked module,MIMIC-CXR is part of the MIMIC family; linkage details per PhysioNet page
+NLP-016,NLP-008,derived,emrQA is generated from n2c2 annotations and inherits the n2c2 DUA (emrQA repository)
+CLN-004,PH-005,derived,UCI CDC Diabetes Health Indicators is derived from BRFSS survey data (record mirrors field)
+CLN-021,CLN-020,teaching version,Framingham teaching dataset vs. full cohort data (BioLINCC pages); do not count as one
+BIO-020,BIO-012,overlapping versions,Tox21 challenge data vs. MoleculeNet Tox21 (8,014 compounds); count once per task definition
+BIO-019,BIO-014,distributed via,DAVIS/KIBA are distributed through TDC; TDC is the platform record
+IMG-014,IMG-015,overlap,HAM10000 is mirrored in the ISIC Archive (record mirrors field); avoid double counting in ISIC-based training sets
+IMG-016,IMG-017,derived (assessment),PCam patches are derived from CAMELYON16 slides per the PCam repository; verify before combining
+IMG-018,IMG-014,derived (assessment),MedMNIST includes derived versions of public datasets (e.g. dermatology from HAM10000) per MedMNIST paper; not re-verified this session
+IMG-018,IMG-007,derived (assessment),MedMNIST ChestMNIST is reported to derive from NIH ChestX-ray14 per MedMNIST paper; not re-verified this session
+BIO-003,BIO-005,derived (assessment),UCI gene expression cancer RNA-Seq cites Synapse syn4301332 (TCGA Pan-Cancer); TCGA is hosted by GDC
+CLN-009,CLN-009,mirror,scikit-learn bundles a copy of UCI WDBC; the copy was acquired and hashed (see acquisition_manifest.csv)
+CLN-017,CLN-017,mirror,scikit-learn bundles the Efron et al. diabetes data (record)

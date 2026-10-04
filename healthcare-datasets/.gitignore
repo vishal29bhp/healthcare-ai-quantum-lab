@@ -1,0 +1,11 @@
+# Raw and derived data never go into git; manifests record checksums instead.
+**/raw/
+**/processed/
+*.part
+
+# Catalogue outputs are small, licence-safe metadata and ARE tracked (root .gitignore ignores *.csv/*.xlsx).
+!catalog/*.csv
+!catalog/category_views/*.csv
+!catalog/*.xlsx
+!logs/*.csv
+!experiments/results/*.csv

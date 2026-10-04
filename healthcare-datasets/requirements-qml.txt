@@ -1,0 +1,2 @@
+-r ../requirements-dev.txt
+pennylane>=0.40,<1
