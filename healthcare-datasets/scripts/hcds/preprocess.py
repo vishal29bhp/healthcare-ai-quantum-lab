@@ -104,8 +104,9 @@ def validate_preprocessing(frame: pd.DataFrame, target: str, *, group: str | Non
     q = quantum_ready_pipeline(prepared.x_train, n_qubits).fit(prepared.x_train)
     angles = q.transform(prepared.x_test)
     checks["quantum_features_shape"] = angles.shape[1] == n_qubits
-    checks["train_angles_within_0_pi"] = bool(
-        (q.transform(prepared.x_train) >= -1e-9).all() and (q.transform(prepared.x_train) <= np.pi + 1e-9).all()
-    )
+    # Tolerance covers float error from PCA's randomized solver (used automatically on large inputs such as
+    # CLN-003), whose transform() differs from the fit-time projection by ~1e-6; a leak would show far larger values.
+    train_angles = q.transform(prepared.x_train)
+    checks["train_angles_within_0_pi"] = bool((train_angles >= -1e-5).all() and (train_angles <= np.pi + 1e-5).all())
     return {"ok": all(checks.values()), "checks": checks, "notes": prepared.notes,
             "train_rows": len(prepared.y_train), "test_rows": len(prepared.y_test)}

@@ -26,6 +26,7 @@ from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassif
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (accuracy_score, average_precision_score, balanced_accuracy_score, brier_score_loss,
                              confusion_matrix, f1_score, precision_score, recall_score, roc_auc_score)
+from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedKFold
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -65,7 +66,8 @@ def classical_models(seed: int) -> dict:
 
 
 def angle_pipeline(n_qubits: int, seed: int) -> Pipeline:
-    return Pipeline([("scale", StandardScaler()), ("pca", PCA(n_components=n_qubits, random_state=seed)),
+    return Pipeline([("impute", SimpleImputer(strategy="median")), ("scale", StandardScaler()),
+                     ("pca", PCA(n_components=n_qubits, random_state=seed)),
                      ("angles", MinMaxScaler(feature_range=(0.0, np.pi)))])
 
 
@@ -137,16 +139,20 @@ def fidelity_kernel(a: np.ndarray, b: np.ndarray) -> np.ndarray:
 
 
 def run(data: pd.DataFrame, target: str, *, n_qubits: int = 4, folds: int = 5, seed: int = 42,
-        vqc_epochs: int = 30, include_quantum: bool = True) -> pd.DataFrame:
+        vqc_epochs: int = 30, include_quantum: bool = True, repeats: int = 1) -> pd.DataFrame:
+    """Repeated stratified K-fold; repeat r reshuffles with seed + r. Missing values are imputed inside each fold."""
     x_all = data.drop(columns=[target]).to_numpy(dtype=float)
     y_all = data[target].to_numpy(dtype=int)
-    cv = StratifiedKFold(n_splits=folds, shuffle=True, random_state=seed)
+    splits = [(r, fold, tr, te) for r in range(repeats)
+              for fold, (tr, te) in enumerate(StratifiedKFold(n_splits=folds, shuffle=True, random_state=seed + r)
+                                              .split(x_all, y_all))]
     rows = []
-    for fold, (tr, te) in enumerate(cv.split(x_all, y_all)):
+    for repeat, fold, tr, te in splits:
+        fold_rows_start = len(rows)
         x_tr, x_te, y_tr, y_te = x_all[tr], x_all[te], y_all[tr], y_all[te]
         for name, model in classical_models(seed).items():
             for features in ("all", f"pca{n_qubits}"):
-                steps = [("scale", StandardScaler())]
+                steps = [("impute", SimpleImputer(strategy="median")), ("scale", StandardScaler())]
                 if features != "all":
                     steps.append(("pca", PCA(n_components=n_qubits, random_state=seed)))
                 pipe = Pipeline(steps + [("model", clone(model))])
@@ -156,10 +162,12 @@ def run(data: pd.DataFrame, target: str, *, n_qubits: int = 4, folds: int = 5, s
                              **metrics(y_te, (score >= 0.5).astype(int), score),
                              "train_s": t1 - t0, "infer_s": t2 - t1})
         if not include_quantum:
+            for row in rows[fold_rows_start:]:
+                row["repeat"] = repeat
             continue
         prep = angle_pipeline(n_qubits, seed).fit(x_tr)
         q_tr, q_te = prep.transform(x_tr), np.clip(prep.transform(x_te), 0, np.pi)
-        vqc = VariationalClassifier(n_qubits, epochs=vqc_epochs, seed=seed + fold)
+        vqc = VariationalClassifier(n_qubits, epochs=vqc_epochs, seed=seed + 100 * repeat + fold)
         t0 = time.perf_counter(); vqc.fit(q_tr, y_tr); t1 = time.perf_counter()
         score = vqc.predict_proba1(q_te); t2 = time.perf_counter()
         rows.append({"fold": fold, "model": "VQC_angle_SEL2", "features": f"pca{n_qubits}", "family": "quantum (simulated)",
@@ -172,7 +180,40 @@ def run(data: pd.DataFrame, target: str, *, n_qubits: int = 4, folds: int = 5, s
         rows.append({"fold": fold, "model": "QSVM_IQP_fidelity_kernel", "features": f"pca{n_qubits}",
                      "family": "quantum kernel (simulated)", **metrics(y_te, (score >= 0.5).astype(int), score),
                      "train_s": t1 - t0, "infer_s": t2 - t1})
+        for row in rows[fold_rows_start:]:
+            row["repeat"] = repeat
     return pd.DataFrame(rows)
+
+
+def corrected_ttest(diffs: np.ndarray, n_train: int, n_test: int) -> tuple[float, float]:
+    """Nadeau-Bengio corrected resampled t-test on per-fold score differences. Returns (t, two-sided p)."""
+    from scipy import stats
+
+    k = len(diffs)
+    var = np.var(diffs, ddof=1)
+    if k < 2 or var == 0:
+        return float("nan"), float("nan")
+    t = np.mean(diffs) / np.sqrt((1 / k + n_test / n_train) * var)
+    return float(t), float(2 * stats.t.sf(abs(t), df=k - 1))
+
+
+def compare(results: pd.DataFrame, n_rows: int, folds: int, reference: tuple[str, str],
+            metrics_: tuple[str, ...] = ("balanced_accuracy", "roc_auc")) -> pd.DataFrame:
+    """Every model vs. ``reference`` (model, features) on matched folds, with the corrected t-test."""
+    n_test = n_rows / folds
+    ref = results[(results.model == reference[0]) & (results.features == reference[1])].set_index(["repeat", "fold"])
+    out = []
+    for (model, features), group in results.groupby(["model", "features"]):
+        if (model, features) == reference:
+            continue
+        group = group.set_index(["repeat", "fold"])
+        for metric in metrics_:
+            diffs = (group[metric] - ref.loc[group.index, metric]).to_numpy(dtype=float)
+            t, p = corrected_ttest(diffs, n_rows - n_test, n_test)
+            out.append({"model": model, "features": features, "reference": f"{reference[0]} ({reference[1]})",
+                        "metric": metric, "mean_diff": round(float(np.mean(diffs)), 4), "t": round(t, 3),
+                        "p_corrected": round(p, 4), "significant_at_0.05": bool(p < 0.05) if p == p else False})
+    return pd.DataFrame(out)
 
 
 def summarise(results: pd.DataFrame) -> pd.DataFrame:
@@ -190,15 +231,25 @@ def load_acquired(dataset_id: str) -> tuple[pd.DataFrame, str]:
     """Load a successfully acquired file and binarise its target so the configured positive class is 1."""
     from .acquire import MANIFEST_PATH
     from .status import read_csv_rows
-    from .validate import PARSE_CONFIG, read_tabular
+    from .validate import PARSE_CONFIG, file_config, read_tabular
 
-    cfg = json.loads(PARSE_CONFIG.read_text())[dataset_id]
-    rows = [r for r in read_csv_rows(MANIFEST_PATH) if r["dataset_id"] == dataset_id and r["download_status"] == "success"]
+    config = json.loads(PARSE_CONFIG.read_text())
+    wanted = config[dataset_id].get("benchmark_file")
+    rows = [r for r in read_csv_rows(MANIFEST_PATH) if r["dataset_id"] == dataset_id and r["download_status"] == "success"
+            and (wanted is None or r["requested_files"] == wanted)]
     if not rows:
         raise SystemExit(f"{dataset_id} has no successful acquisition in the manifest; run hcds.pipeline first")
-    frame = read_tabular(ROOT / rows[-1]["local_path"], **cfg.get("read_options", {}))
-    target = cfg["target"]
-    frame["label_positive"] = (frame.pop(target) == cfg.get("positive_label", 1)).astype(int)
+    path = ROOT / rows[-1]["local_path"]
+    cfg = file_config(config, dataset_id, path.name)
+    frame = read_tabular(path, **cfg.get("read_options", {}))
+    frame = frame.drop(columns=[c for c in cfg.get("drop_columns", []) if c in frame.columns])
+    labels = frame.pop(cfg["target"])
+    rule = cfg.get("positive_rule")
+    if rule:  # e.g. {"op": "gt", "value": 0} for Heart Disease num > 0
+        positive = {"gt": labels > rule["value"], "ge": labels >= rule["value"]}[rule["op"]]
+    else:
+        positive = labels == cfg.get("positive_label", 1)
+    frame["label_positive"] = positive.astype(int)
     return frame, "label_positive"
 
 
@@ -226,6 +277,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--vqc-epochs", type=int, default=30)
     parser.add_argument("--classical-only", action="store_true")
+    parser.add_argument("--repeats", type=int, default=1, help="Repeated K-fold: number of reshuffled repeats")
     args = parser.parse_args(argv)
     if args.dataset_id:
         data, target = load_acquired(args.dataset_id)
@@ -236,14 +288,17 @@ def main(argv: list[str] | None = None) -> int:
     args.target = target
     started = time.time()
     results = run(data, args.target, n_qubits=args.qubits, folds=args.folds, seed=args.seed,
-                  vqc_epochs=args.vqc_epochs, include_quantum=not args.classical_only)
+                  vqc_epochs=args.vqc_epochs, include_quantum=not args.classical_only, repeats=args.repeats)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     results.to_csv(RESULTS_DIR / f"{args.name}_folds.csv", index=False)
     summary = summarise(results)
     summary.to_csv(RESULTS_DIR / f"{args.name}_summary.csv", index=False)
+    if args.repeats * args.folds >= 2:
+        compare(results, len(data), args.folds, ("LogisticRegression", f"pca{args.qubits}")).to_csv(
+            RESULTS_DIR / f"{args.name}_comparisons.csv", index=False)
     meta = {"dataset": args.name, "rows": int(len(data)), "features": int(data.shape[1] - 1),
             "class_counts": {str(k): int(v) for k, v in data[args.target].value_counts().items()},
-            "folds": args.folds, "seed": args.seed, "qubits": args.qubits, "vqc_epochs": args.vqc_epochs,
+            "folds": args.folds, "repeats": args.repeats, "seed": args.seed, "qubits": args.qubits, "vqc_epochs": args.vqc_epochs,
             "wall_clock_s": round(time.time() - started, 1), "environment": environment()}
     (RESULTS_DIR / f"{args.name}_run.json").write_text(json.dumps(meta, indent=2))
     print(summary.to_string(index=False))

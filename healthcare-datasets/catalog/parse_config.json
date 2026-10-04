@@ -41,6 +41,193 @@
   },
   "note": "scikit-learn's bundled copy of UCI WDBC: first line is '569,30,malignant,benign' metadata; label 0=malignant, 1=benign (sklearn encoding, inverse of the UCI M/B letter). Benchmarks treat malignant (label 0) as the positive class.",
   "positive_label": 0,
+  "task": "classification",
+  "benchmark_file": "breast_cancer_sklearn_copy.csv",
+  "files": {
+   "breast_cancer_wisconsin_diagnostic.zip": {
+    "target": "diagnosis",
+    "positive_label": "M",
+    "drop_columns": [
+     "id"
+    ],
+    "read_options": {
+     "member": "wdbc.data",
+     "header": null,
+     "sep": ",",
+     "names": [
+      "id",
+      "diagnosis",
+      "mean_radius",
+      "mean_texture",
+      "mean_perimeter",
+      "mean_area",
+      "mean_smoothness",
+      "mean_compactness",
+      "mean_concavity",
+      "mean_concave_points",
+      "mean_symmetry",
+      "mean_fractal_dimension",
+      "radius_error",
+      "texture_error",
+      "perimeter_error",
+      "area_error",
+      "smoothness_error",
+      "compactness_error",
+      "concavity_error",
+      "concave_points_error",
+      "symmetry_error",
+      "fractal_dimension_error",
+      "worst_radius",
+      "worst_texture",
+      "worst_perimeter",
+      "worst_area",
+      "worst_smoothness",
+      "worst_compactness",
+      "worst_concavity",
+      "worst_concave_points",
+      "worst_symmetry",
+      "worst_fractal_dimension"
+     ]
+    },
+    "note": "Canonical UCI file: id, diagnosis (M/B), then the same 30 features as the scikit-learn copy."
+   }
+  }
+ },
+ "CLN-001": {
+  "target": "num",
+  "positive_rule": {
+   "op": "gt",
+   "value": 0
+  },
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "Processed Cleveland subset (303 rows). num 0 = no disease, 1-4 = disease; binarised as num > 0. ca/thal have a few missing values (imputed in-fold)."
+ },
+ "CLN-002": {
+  "target": "class",
+  "positive_label": "tested_positive",
+  "task": "classification",
+  "note": "Pima Indians Diabetes (OpenML 37). Zeros in plas/pres/skin/insu/mass are physiologically implausible and are documented missing-value codes; left as-is to match the plan (no reduction), noted as a limitation."
+ },
+ "CLN-003": {
+  "target": "readmitted",
+  "group": "patient_nbr",
+  "drop_columns": [
+   "encounter_id"
+  ],
+  "positive_label": "<30",
+  "read_options": {
+   "member": "diabetic_data.csv",
+   "sep": ",",
+   "na_values": [
+    "?"
+   ],
+   "low_memory": false
+  },
+  "task": "classification",
+  "note": "Diabetes 130-US hospitals. Target for E4 is 30-day readmission (readmitted == '<30'). patient_nbr repeats across encounters, so splits are grouped on it."
+ },
+ "CLN-005": {
+  "target": "class",
+  "positive_label": "Positive",
+  "read_options": {
+   "sep": ","
+  },
   "task": "classification"
+ },
+ "CLN-006": {
+  "parse": false,
+  "note": "The UCI zip holds Chronic_Kidney_Disease.rar; no RAR extractor is installed in this environment, so it was not parsed."
+ },
+ "CLN-007": {
+  "target": "selector",
+  "positive_label": 1,
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "age",
+    "gender",
+    "tb",
+    "db",
+    "alkphos",
+    "sgpt",
+    "sgot",
+    "tp",
+    "alb",
+    "ag_ratio",
+    "selector"
+   ]
+  },
+  "note": "ILPD has no header row; selector 1 = liver patient, 2 = non-patient (UCI documentation). ag_ratio has 4 missing values."
+ },
+ "CLN-008": {
+  "target": "Category",
+  "drop_columns": [
+   "Unnamed: 0"
+  ],
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "HCV data; Category is 5-class (blood donor, suspect donor, hepatitis, fibrosis, cirrhosis). First column is a row index."
+ },
+ "CLN-010": {
+  "target": "DEATH_EVENT",
+  "positive_label": 1,
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "'time' is follow-up length and is known to leak the outcome; exclude it from any predictive model.",
+  "drop_columns": [
+   "time"
+  ]
+ },
+ "CLN-011": {
+  "target": "Biopsy",
+  "positive_label": 1,
+  "read_options": {
+   "sep": ",",
+   "na_values": [
+    "?"
+   ]
+  },
+  "task": "classification",
+  "note": "Missing values are coded '?'. Hinselmann/Schiller/Citology are alternative targets and must be dropped when Biopsy is the target.",
+  "drop_columns": [
+   "Hinselmann",
+   "Schiller",
+   "Citology"
+  ]
+ },
+ "CLN-013": {
+  "target": "hospital_expire_flag",
+  "group": "subject_id",
+  "task": "classification",
+  "read_options": {
+   "member": "mimic-iv-clinical-database-demo-2.2/hosp/admissions.csv.gz",
+   "sep": ","
+  },
+  "note": "Open ODbL demo (100 patients). Parsed table: hosp/admissions; grouped by subject_id. Very few positives, so it is a pipeline smoke test, not a benchmark."
+ },
+ "TS-001": {
+  "format": "wfdb",
+  "note": "WFDB waveform archive: integrity checked against SHA256SUMS.txt; parsed by reading every record header with wfdb."
+ },
+ "TS-009": {
+  "format": "wfdb",
+  "note": "WFDB waveform archive: integrity checked against SHA256SUMS.txt; parsed by reading every record header with wfdb."
+ },
+ "TS-017": {
+  "format": "wfdb",
+  "note": "WFDB waveform archive: integrity checked against SHA256SUMS.txt; parsed by reading every record header with wfdb."
+ },
+ "TS-020": {
+  "format": "archive",
+  "note": "Per-subject Empatica CSV files; integrity checked against SHA256SUMS.txt; parsed by reading every CSV member."
  }
 }
