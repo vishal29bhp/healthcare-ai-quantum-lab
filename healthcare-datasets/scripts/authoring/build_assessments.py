@@ -1,0 +1,53 @@
+"""Authoring source for catalog/assessments.csv: our suitability judgements (not repository claims).
+
+Numeric sizes are copied from the verified records (or measured, where stated) and feed the QML resource estimates.
+Re-run after editing: python scripts/authoring/build_assessments.py
+"""
+import csv, json, glob
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT / 'catalog' / 'assessments.csv'
+recs={}
+for f in glob.glob(str(ROOT / 'catalog' / 'records' / '*.json')):
+    for r in json.load(open(f)): recs[r['dataset_id']]=r
+TAB_BASE="LogisticRegression; SVM-RBF; RandomForest; HistGradientBoosting"
+QTAB="VQC (angle encoding + hardware-efficient ansatz); QSVM fidelity kernel (ZZ/IQP map); hybrid classical-head VQC"
+A={}
+def tab(i,n,d,task,labels,imb,cml,qml,red,enc="Angle (RY) after PCA to target qubits; ZZ/IQP feature map for kernels",q=8,basis="repository-reported",train="Shallow ansatz (2-3 layers) to limit barren plateaus; 4-8 qubits trains in seconds-minutes on CPU simulator"):
+    A[i]=dict(classical_ml_suitability=cml,qml_suitability=qml,task=task,n_samples=n,n_features=d,size_basis=basis,target_qubits=q,label_structure=labels,class_imbalance=imb,reduction=red,recommended_encoding=enc,recommended_qml_models=QTAB,classical_baselines=TAB_BASE,trainability_notes=train)
+tab("CLN-001",303,13,"binary classification (num>0 vs 0)","5-level 'num' collapsed to binary by convention","Not reported on page; check after download","High: classic small benchmark; Cleveland subset only, missing values in ca/thal","High: 13 features fit 8 qubits after PCA/selection; very small n -> wide CIs, use repeated CV","Clinically guided selection (age, sex, cp, thalach, oldpeak, ca, thal, exang) or PCA-8 fitted in-fold")
+tab("CLN-002",768,8,"binary classification","binary (tested_positive/negative)","500/268 (OpenML-reported)","High: small, well studied. Assessment: OpenML reports 0 missing values, but physiologically impossible zeros (e.g. glucose, BMI) likely encode missingness; inspect before imputing","High: 8 features map 1:1 to 8 qubits without reduction","None needed (8 features); decide in-fold how to treat implausible zeros",q=8)
+tab("CLN-003",101766,47,"binary/3-class readmission (<30, >30, NO)","readmission (<30 days vs other) per source description","Not reported on page; measure after download","High: realistic EHR extract with many categorical codes. Assessment: multiple encounters per patient are possible, so split by patient identifier","Medium: needs stratified representative subsample (e.g. 2-5k) and heavy reduction; QSVM kernel cost O(n^2)","One-hot/target-encode in-fold, PCA or mutual-information selection to 8; GroupKFold on patient_nbr",q=8,basis="repository-reported; QML uses stratified subsample")
+tab("CLN-004",253680,21,"binary/3-class diabetes status","3-class diabetes / pre-diabetes / healthy","Not reported on page; measure after download","High: large survey-derived tabular set","Medium: subsample required; 21 mostly binary/ordinal features suit basis or angle encoding","Selection to 8-12 features; stratified subsample 2-5k for QML",q=10,basis="repository-reported; QML uses stratified subsample")
+tab("CLN-005",520,16,"binary classification","Positive/Negative","Not reported on page","Medium: small questionnaire data; mostly binary symptoms; risk of optimistic estimates","High: binary features suit basis encoding (16 qubits) or angle after selection to 8","Basis encoding of binary symptoms, or select 8",q=8)
+tab("CLN-006",400,24,"binary classification (ckd/notckd)","binary","Not reported on page","Medium: small; source documents missing values","High after imputation and reduction to 8","In-fold imputation; PCA-8",q=8)
+tab("CLN-007",583,10,"binary classification","liver patient vs not","Not reported on page","Medium: small. Assessment: check label provenance and sex balance before use","High: 10 features -> 8 qubits","PCA-8 or drop one redundant bilirubin feature",q=8)
+tab("CLN-008",615,12,"multi-class (blood donor vs hepatitis/fibrosis/cirrhosis)","5 categories incl. suspect donor","Not reported on page; measure after download","Medium: small with rare classes","Medium: multi-class readout needs more qubits/measurements; consider binary donor vs disease","PCA-8; binary reformulation for first QML runs",q=8)
+tab("CLN-009",569,30,"binary classification (malignant vs benign)","binary","212 malignant / 357 benign (measured on scikit-learn copy)","High: clean, no missing values (measured), strong classical baselines","High: canonical QML benchmark; PCA-4..8 retains most variance; run completed on simulator (see experiments/results)","PCA fitted in-fold to 4-8 components",q=4,basis="measured on acquired copy")
+tab("CLN-010",299,12,"binary classification (death event)","binary","Not reported on page","Medium: very small; time variable can leak outcome (follow-up time) -> exclude 'time' for prediction","High: 11-12 features -> 8 qubits","Exclude follow-up 'time' (leakage); PCA/selection to 8",q=8)
+tab("CLN-011",858,36,"binary classification (biopsy etc.)","4 candidate targets (Hinselmann, Schiller, Cytology, Biopsy)","Not reported on page; measure after download","Medium: source notes patients declined some questions (missing values)","Low-Medium: missingness plus likely rare positives make small-sample QML unstable (assessment)","Drop near-empty columns in-fold, PCA-8; use PR-AUC",q=8)
+tab("CLN-017",442,10,"regression (disease progression at 1 year)","continuous","n/a (regression)","High: standard regression benchmark","Medium: QML regression (VQR) feasible with 10->8 qubits; fewer QML regression baselines","Use all 10 or PCA-8",q=8)
+tab("BIO-001",3190,60,"3-class classification (EI/IE/N)","3-class","Not reported on page","High: sequence benchmark; one-hot of 60 nucleotides","Medium: one-hot gives 240 binary features; needs k-mer counts or PCA to 8-10 qubits","k-mer (k=2/3) frequencies then PCA-8; or basis encoding of a window",q=8)
+tab("BIO-002",106,57,"binary classification (promoter vs non)","binary (+/-)","Not reported on landing page","Low-Medium: only 106 samples","Medium: tiny n; useful as a toy for basis/sequence encodings, not for claims","k-mer features + PCA-6",q=6)
+tab("BIO-003",801,20531,"5-class tumour type","5 classes (BRCA, KIRC, COAD, LUAD, PRAD)","Not reported on page","High: p >> n, classical models already near ceiling","Medium: requires aggressive in-fold reduction (variance filter -> PCA-8); amplitude encoding of 20,531 features needs 15 qubits but exponential state prep","Variance filter + PCA-8 fitted in-fold; amplitude encoding only as a study of state-prep cost",q=8)
+tab("TS-016",12000,3,"regression (SBP/DBP from PPG+ECG)","continuous BP","n/a","Medium: signal-level features must be engineered. Assessment: confirm whether subject identity is recoverable to avoid leakage","Low-Medium: after feature extraction (PTT, HR, PPG morphology) 8-qubit VQR possible","Extract per-beat features, aggregate per window; subject-grouped splits if IDs recoverable",q=8,basis="repository-reported instance count; features after engineering")
+cat_defaults={
+ "Medical Imaging":("High for CNN/ViT baselines when labels exist; split by patient/study","Low directly (images far exceed qubit budgets). Hybrid only: pretrained CNN embedding -> PCA-8 -> VQC head, or MedMNIST 28x28 -> PCA","image classification/segmentation","Pretrained CNN features or downsampling, then PCA to 8 qubits fitted in-fold","Logistic regression on CNN embeddings; ResNet/DenseNet/U-Net fine-tuning"),
+ "Clinical/Tabular":("High where access is granted; multi-table EHR needs cohort definition and patient-level splits","Medium: only after cohort extraction into a compact tabular view with representative sampling","risk prediction (task defined by cohort)","Cohort extraction, feature engineering, selection to 8-12 features","Logistic regression; gradient boosting"),
+ "Biomedical/Molecular":("High for task-specific benchmarks; database resources need task definition first","Low-Medium: molecules/sequences need fingerprints or descriptors reduced to 8-12 features; no tabular view defined yet","property / interaction prediction","Morgan fingerprints or descriptors -> PCA/selection to 8-12; scaffold splits","RandomForest / GBM on fingerprints; GNN baselines"),
+ "Physiological/Time-Series":("High: well-annotated signals; use record/subject-grouped windows","Low-Medium: raw signals too long; hybrid with engineered features (HRV, spectral power) reduced to 8 qubits","beat/episode/window classification","Filtering, fixed windows, hand-crafted or learned features, PCA-8; subject-grouped splits","GBM on engineered features; 1D-CNN"),
+ "Public Health":("Medium: aggregate indicators suit regression/forecasting and descriptive analysis, not patient-level prediction","Low: aggregate panels have few independent samples; QML adds little beyond toy regression","indicator regression / forecasting","Choose indicator panel, align geographies/years, standardise","Linear/Poisson regression, ARIMA/Prophet-style forecasting"),
+ "Medical Text and Healthcare NLP":("High for transformer NLP; terminology resources are features/ontologies not labelled datasets","Low: text requires embeddings first; only hybrid embedding -> PCA -> VQC head as an exploratory study","NER / QA / classification","Sentence embeddings (e.g. biomedical BERT) -> PCA-8 fitted in-fold","TF-IDF + logistic regression; fine-tuned biomedical transformers"),
+}
+rows=[]
+for i,r in sorted(recs.items()):
+    if i in A: row=A[i]
+    else:
+        c,q,t,red,base=cat_defaults[r['category']]
+        restricted = r['access_level']!='open'
+        row=dict(classical_ml_suitability=c+("; access must be obtained first" if restricted else ""),qml_suitability=q,task=t,n_samples="",n_features="",size_basis="no fixed tabular view yet",target_qubits="",label_structure=r['target'][:120],class_imbalance=r['class_distribution'][:120],reduction=red,recommended_encoding="Angle encoding of reduced features" ,recommended_qml_models="Hybrid classical feature extractor + VQC head" if q.startswith("Low") else QTAB,classical_baselines=base,trainability_notes="Representative, stratified (and patient-grouped) subsample; reduction fitted on training folds only")
+    rows.append(dict(dataset_id=i,**row))
+cols=['dataset_id','classical_ml_suitability','qml_suitability','task','n_samples','n_features','size_basis','target_qubits','label_structure','class_imbalance','reduction','recommended_encoding','recommended_qml_models','classical_baselines','trainability_notes']
+with open(OUT,'w',newline='') as f:
+    w=csv.DictWriter(f,fieldnames=cols); w.writeheader(); w.writerows(rows)
+print(len(rows))

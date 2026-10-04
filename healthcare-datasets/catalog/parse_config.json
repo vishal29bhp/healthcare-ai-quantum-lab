@@ -1,0 +1,166 @@
+{
+ "CLN-009": {
+  "target": "target_sklearn_0_malignant_1_benign",
+  "read_options": {
+   "skiprows": 1,
+   "header": null,
+   "names": [
+    "mean_radius",
+    "mean_texture",
+    "mean_perimeter",
+    "mean_area",
+    "mean_smoothness",
+    "mean_compactness",
+    "mean_concavity",
+    "mean_concave_points",
+    "mean_symmetry",
+    "mean_fractal_dimension",
+    "radius_error",
+    "texture_error",
+    "perimeter_error",
+    "area_error",
+    "smoothness_error",
+    "compactness_error",
+    "concavity_error",
+    "concave_points_error",
+    "symmetry_error",
+    "fractal_dimension_error",
+    "worst_radius",
+    "worst_texture",
+    "worst_perimeter",
+    "worst_area",
+    "worst_smoothness",
+    "worst_compactness",
+    "worst_concavity",
+    "worst_concave_points",
+    "worst_symmetry",
+    "worst_fractal_dimension",
+    "target_sklearn_0_malignant_1_benign"
+   ],
+   "sep": ","
+  },
+  "note": "scikit-learn's bundled copy of UCI WDBC: first line is '569,30,malignant,benign' metadata; label 0=malignant, 1=benign (sklearn encoding, inverse of the UCI M/B letter). Benchmarks treat malignant (label 0) as the positive class.",
+  "positive_label": 0,
+  "task": "classification",
+  "file": "breast_cancer_sklearn_copy.csv"
+ },
+ "CLN-001": {
+  "target": "num",
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "UCI processed Cleveland data; num 0-4, experiments use num > 0 as the positive class (E3)"
+ },
+ "CLN-002": {
+  "target": "class",
+  "positive_label": "tested_positive",
+  "task": "classification",
+  "note": "OpenML 37 ARFF; zeros in plas, pres, skin, insu, mass are missing measurements (recoded in E2)"
+ },
+ "CLN-003": {
+  "target": "readmitted",
+  "group": "patient_nbr",
+  "min_frequency": 0.01,
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "na_values": [
+    "?"
+   ],
+   "keep_default_na": false
+  },
+  "note": "diabetic_data.csv; '?' is missing, 'None' in max_glu_serum/A1Cresult means not measured; group on patient_nbr"
+ },
+ "CLN-005": {
+  "target": "class",
+  "positive_label": "Positive",
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification"
+ },
+ "CLN-007": {
+  "target": "Selector",
+  "positive_label": 1,
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "Age",
+    "Gender",
+    "TB",
+    "DB",
+    "Alkphos",
+    "Sgpt",
+    "Sgot",
+    "TP",
+    "ALB",
+    "A/G Ratio",
+    "Selector"
+   ]
+  },
+  "note": "ILPD CSV has no header row; Selector 1 = liver patient, 2 = not"
+ },
+ "CLN-008": {
+  "target": "Category",
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "index_col": 0
+  },
+  "note": "hcvdat0.csv; first column is a row index"
+ },
+ "CLN-010": {
+  "target": "DEATH_EVENT",
+  "positive_label": 1,
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "'time' is follow-up length and leaks the outcome for prediction tasks; drop it for prognosis models"
+ },
+ "CLN-011": {
+  "target": "Biopsy",
+  "positive_label": 1,
+  "read_options": {
+   "sep": ",",
+   "na_values": [
+    "?"
+   ]
+  },
+  "task": "classification"
+ },
+ "BIO-001": {
+  "target": "class",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "class",
+    "instance",
+    "sequence"
+   ],
+   "skipinitialspace": true
+  },
+  "task": "classification",
+  "note": "UCI splice junctions: 3,190 60-nt DNA windows, class EI (exon-intron), IE (intron-exon) or N (neither). The sequence string needs per-position one-hot encoding before modelling; a few sequences contain ambiguity codes (D, N, R, S)."
+ },
+ "BIO-002": {
+  "target": "class",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "class",
+    "instance",
+    "sequence"
+   ],
+   "skipinitialspace": true
+  },
+  "positive_label": "+",
+  "task": "classification",
+  "note": "UCI E. coli promoters: 106 57-nt sequences, + promoter / - non-promoter. Sequence needs per-position one-hot encoding; leading tabs stripped."
+ }
+}

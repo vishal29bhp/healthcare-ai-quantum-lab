@@ -1,0 +1,32 @@
+{
+  "experiment": "E2",
+  "dataset_id": "CLN-002",
+  "rows": 768,
+  "raw_columns": 8,
+  "positives": 268,
+  "negatives": 500,
+  "patients": null,
+  "cv": "StratifiedKFold, 5 folds x 5 repeats, seeds 42..46",
+  "qubits": 8,
+  "quantum_view": "all8",
+  "quantum_train_max": null,
+  "vqc": "angle (RY) encoding, 2 StronglyEntanglingLayers, <Z0> readout, Adam lr 0.05, batch 32, 30 epochs, 0.5 threshold",
+  "qsvm": "IQPEmbedding (2 repeats) exact fidelity kernel, SVC C=1; Platt probabilities",
+  "decision_threshold": 0.5,
+  "class_weight": null,
+  "data_notes": [
+    "zeros recoded as missing (median-imputed in-fold): {'plas': 5, 'pres': 35, 'skin': 227, 'insu': 374, 'mass': 11}"
+  ],
+  "wall_clock_s": 629.2,
+  "parallel_jobs": 3,
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.44-fc-v64-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.1",
+    "pennylane": "0.45.1",
+    "quantum_device": "default.qubit (noiseless statevector simulator, analytic expectation values)"
+  }
+}
