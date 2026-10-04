@@ -109,7 +109,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | PH-011 | Health Management Information System (HMIS) India | Not reported (references NDSAP) | open | 2026-10-04 | Fetch failed for hmis.mohfw.gov.in (robots.txt ConnectTimeout); WebFetch of data.gov.in HMIS Bihar resource | Source verified |
 | PH-012 | State/UT-wise Total Number of PHCs, SHCs and District Hospitals as per Rural Health Statistics (RHS) 2021-22 | Not reported (none shown) | open | 2026-10-04 | WebFetch of data.gov.in resource page | Source verified |
 | PH-013 | IHME Global Burden of Disease (GBD) Results Tool | IHME FREE-OF-CHARGE NON-COMMERCIAL USER AGREEMENT (May 2020) | unknown | 2026-10-04 | Fetch failed for vizhub (403); WebFetch of ghdx gbd-2023/code, healthdata.org GBD page, IHME user agreement PDF | Access verified |
-| PH-014 | Our World in Data COVID-19 dataset | Creative Commons BY license | open | 2026-10-04 | WebFetch of GitHub repo + public/data/README.md | Access verified |
+| PH-014 | Our World in Data COVID-19 dataset | Creative Commons BY license | open | 2026-10-04 | WebFetch of GitHub repo + public/data/README.md | Parsed |
 | PH-015 | World Bank World Development Indicators (Health topic) | Creative Commons Attribution 4.0 | open | 2026-10-04 | WebFetch of WB Data Catalog WDI page + data.worldbank.org/topic/health + API overview | Access verified |
 | PH-016 | CDC/ATSDR Social Vulnerability Index (SVI) | Not reported | open | 2026-10-04 | WebFetch of SVI landing + data download page | Source verified |
 | PH-017 | EPA Air Quality System (AQS) / AirData | Not reported | open | 2026-10-04 | WebFetch of EPA outdoor air quality page, AirData download files page, AQS API docs | Access verified |
