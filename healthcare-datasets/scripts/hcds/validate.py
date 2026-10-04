@@ -11,6 +11,7 @@ import csv
 import hashlib
 import io
 import json
+import tarfile
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -88,9 +89,10 @@ def parse_wfdb_archive(path: Path) -> dict | None:
 
 
 def parse_archive_tables(path: Path) -> dict | None:
-    """Parse every CSV (plain, .csv.gz, or inside one level of nested zip) in a multi-table archive.
+    """Parse every CSV (plain, .csv.gz, or inside one level of nested zip or .tar.gz) in a multi-table archive.
 
-    Used for archives that hold many tables (MIMIC-IV demo, Empatica exports) rather than one dataset file.
+    Used for archives that hold many tables (MIMIC-IV demo, Empatica exports, the UCI RNA-Seq tarball) rather than
+    one dataset file.
     None if the archive has at most one CSV. Raises if any table fails to parse, so ``parsed`` stays honest.
     """
     def tables(archive: zipfile.ZipFile, prefix: str = ""):
@@ -101,6 +103,11 @@ def parse_archive_tables(path: Path) -> dict | None:
             elif lower.endswith(".zip") and not prefix:
                 with zipfile.ZipFile(io.BytesIO(archive.read(name))) as inner:
                     yield from tables(inner, prefix=name + "!")
+            elif lower.endswith((".tar.gz", ".tgz")) and not prefix:
+                with archive.open(name) as raw, tarfile.open(fileobj=raw, mode="r|gz") as inner:
+                    for member in inner:
+                        if member.isfile() and member.name.lower().endswith(".csv"):
+                            yield f"{name}!{member.name}", inner.extractfile(member).read(), None
 
     with zipfile.ZipFile(path) as archive:
         found = list(tables(archive))

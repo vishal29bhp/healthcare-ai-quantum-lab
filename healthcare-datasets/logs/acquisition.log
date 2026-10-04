@@ -50,3 +50,27 @@
 2026-10-04 11:25:25,893 INFO TS-017 success 
 2026-10-04 11:34:30,242 INFO TS-020 success 
 2026-10-04 15:32:53,230 INFO NLP-005 success 
+2026-10-04 15:35:42,933 INFO BIO-001 success 
+2026-10-04 15:35:44,000 INFO BIO-002 success 
+2026-10-04 15:35:48,127 INFO BIO-003 success 
+2026-10-04 15:35:48,840 INFO TS-019 failed HTTPError: HTTP Error 404: Not Found
+2026-10-04 15:39:19,356 WARNING attempt 1 for https://data.cdc.gov/api/views/bi63-dtpu/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 2s
+2026-10-04 15:39:21,649 WARNING attempt 2 for https://data.cdc.gov/api/views/bi63-dtpu/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 4s
+2026-10-04 15:39:25,922 WARNING attempt 3 for https://data.cdc.gov/api/views/bi63-dtpu/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 8s
+2026-10-04 15:39:34,181 WARNING attempt 4 for https://data.cdc.gov/api/views/bi63-dtpu/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 16s
+2026-10-04 15:39:50,445 INFO PH-009 failed URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-10-04 15:39:52,432 WARNING attempt 1 for https://data.cdc.gov/api/views/swc5-untb/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 2s
+2026-10-04 15:39:54,674 WARNING attempt 2 for https://data.cdc.gov/api/views/swc5-untb/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 4s
+2026-10-04 15:39:58,923 WARNING attempt 3 for https://data.cdc.gov/api/views/swc5-untb/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 8s
+2026-10-04 15:40:07,188 WARNING attempt 4 for https://data.cdc.gov/api/views/swc5-untb/rows.csv?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 16s
+2026-10-04 15:40:23,463 INFO PH-008 failed URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-10-04 15:40:25,467 WARNING attempt 1 for https://catalog.ourworldindata.org/garden/covid/latest/compact/compact.csv failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 2s
+2026-10-04 15:40:27,737 WARNING attempt 2 for https://catalog.ourworldindata.org/garden/covid/latest/compact/compact.csv failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 4s
+2026-10-04 15:40:32,027 WARNING attempt 3 for https://catalog.ourworldindata.org/garden/covid/latest/compact/compact.csv failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 8s
+2026-10-04 15:40:40,326 WARNING attempt 4 for https://catalog.ourworldindata.org/garden/covid/latest/compact/compact.csv failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 16s
+2026-10-04 15:40:56,611 INFO PH-014 failed URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-10-04 15:40:58,659 WARNING attempt 1 for https://api.worldbank.org/v2/en/topic/8?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 2s
+2026-10-04 15:41:00,924 WARNING attempt 2 for https://api.worldbank.org/v2/en/topic/8?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 4s
+2026-10-04 15:41:05,211 WARNING attempt 3 for https://api.worldbank.org/v2/en/topic/8?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 8s
+2026-10-04 15:41:13,469 WARNING attempt 4 for https://api.worldbank.org/v2/en/topic/8?<redacted> failed (<urlopen error Tunnel connection failed: 403 Forbidden>); retrying in 16s
+2026-10-04 15:41:29,749 INFO PH-015 failed URLError: <urlopen error Tunnel connection failed: 403 Forbidden>

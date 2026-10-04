@@ -17,9 +17,9 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 
 | Dataset ID | Dataset Name | License (as stated) | Access level | Verified on | Method | Status |
 |---|---|---|---|---|---|---|
-| BIO-001 | Molecular Biology (Splice-junction Gene Sequences) | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API ?id= returned wrong dataset (Heart Disease) and was discarded) | Access verified |
-| BIO-002 | Molecular Biology (Promoter Gene Sequences) | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API ?id= returned wrong dataset and was discarded) | Access verified |
-| BIO-003 | gene expression cancer RNA-Seq | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API ?id= returned wrong dataset and was discarded) | Access verified |
+| BIO-001 | Molecular Biology (Splice-junction Gene Sequences) | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API ?id= returned wrong dataset (Heart Disease) and was discarded) | Preprocessing validated |
+| BIO-002 | Molecular Biology (Promoter Gene Sequences) | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API ?id= returned wrong dataset and was discarded) | Preprocessing validated |
+| BIO-003 | gene expression cancer RNA-Seq | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API ?id= returned wrong dataset and was discarded) | Parsed |
 | BIO-004 | NCBI Gene Expression Omnibus (GEO) | Not verified | open | 2026-10-04 | WebFetch of geo/ and geo/summary blocked by reCAPTCHA; E-utilities EInfo JSON (db=gds) fetched | Source verified |
 | BIO-005 | NCI Genomic Data Commons (GDC) incl. TCGA | Not reported (GDC 'Data Access Policies' referenced but not quoted) | controlled | 2026-10-04 | Portal landing (JS, empty) + GDC API /status, /projects, /cases, /files + release notes + data access page | Access verified |
 | BIO-006 | UniProtKB/Swiss-Prot | CC BY 4.0 ('applied to all copyrightable parts of our databases') | open | 2026-10-04 | uniprot.org pages JS-only; ExPASy relstat + rest.uniprot.org/help/license + REST search JSON fetched | Access verified |

@@ -16,7 +16,7 @@
 | E2 | CLN-002 Pima | binary | same four | VQC/QSVM at 8 qubits, no reduction | 5-fold stratified, repeated ×5 | **Run (simulator)**; results below |
 | E3 | CLN-001 Heart Disease | binary (num>0) | same four | VQC/QSVM at 8 qubits after in-fold selection | repeated 5×5 CV | **Run (simulator)**; results below |
 | E4 | CLN-003 Diabetes 130 | readmission | LR, HistGB | QSVM on a 2–5k stratified, patient-grouped subsample; VQC with mini-batches | StratifiedGroupKFold on patient | **Run (simulator)**; results below |
-| E5 | BIO-003 RNA-Seq | 5-class | LR (L2), SVM, RF | Multi-class VQC (one-vs-rest) after variance filter + PCA-8 | 5-fold stratified | Not run: BIO-003 is not among the 15 approved downloads |
+| E5 | BIO-003 RNA-Seq | 5-class | LR (L2), SVM, RF | Multi-class VQC (one-vs-rest) after variance filter + PCA-8 | 5-fold stratified | **Run (simulator)**; results below |
 | E6 | IMG-018 MedMNIST (e.g. PneumoniaMNIST) | binary | ResNet-18 (official splits), LR on CNN embeddings | Hybrid: frozen CNN embedding → PCA-8 → VQC head | Official train/val/test | Not run: IMG-018 is not approved, and zenodo.org is blocked by the network policy |
 | E7 | TS-001 MIT-BIH | beat classification (AAMI classes) | HistGB on RR/morphology features, 1D-CNN | Hybrid VQC on 8 engineered features | Inter-patient (DS1/DS2) | **Run (simulator)**; results below |
 
@@ -104,10 +104,28 @@ Of 101,766 encounters, 2,423 ended in death or hospice (disposition 11, 13, 14, 
 - With 5 folds and a 3,000-row training subsample tested on about 20,000 rows, the corrected t-test has very little power for the subsample comparisons: none of them reach p < 0.05, including LR vs. QSVM (ROC-AUC −0.079, p = 0.14). Against HistGB on all features with all rows, both quantum models are clearly worse (p < 0.01). The fair, same-data comparison stays inconclusive.
 - The VQC's operating point swings from fold to fold (sensitivity SD 0.185). The class-weighted QSVM still under-calls positives (sensitivity 0.20).
 
-## E5 and E6: not run
+## E5 results: BIO-003 TCGA pan-cancer RNA-Seq, 5 tumour types, 5-fold stratified CV, seed 42
 
-- **E5** (BIO-003, UCI gene-expression RNA-Seq) is hosted on archive.ics.uci.edu, which the network allows, but it was not among the 15 approved downloads. It needs `approved=yes` in `catalog/acquisition_plan.csv`.
-- **E6** (IMG-018 MedMNIST) is not approved either, and zenodo.org is blocked by the network policy. It also needs a CNN and therefore a deep-learning library, which is not installed.
+Source: `experiments/results/E5_BIO-003_rnaseq_summary.csv`, per-fold rows (with confusion matrices) in `_folds.csv`, environment in `_run.json`. Runner: `hcds.rnaseq`. The data are 801 samples × 20,531 genes (267 genes are zero in every sample), with classes BRCA 300, KIRC 146, LUAD 141, PRAD 136 and COAD 78. In each fold, on the training part only, the 2,000 highest-variance genes are kept and standardised; the reduced view is PCA-8 of those. The quantum models see PCA-8 rescaled to [0, π]. The VQC is 5 one-vs-rest binary VQCs (same circuit as above, class-weighted loss, 30 epochs) whose scores are normalised and arg-maxed. The QSVM is a multi-class SVC on the IQP kernel. Wall clock was 442 s with 4 folds in parallel.
+
+| Model | Features | Accuracy | Balanced acc. | Macro F1 | Macro ROC-AUC (OvR) | Train s/fold |
+|---|---|---|---|---|---|---|
+| Logistic regression (L2) | top-2000 genes | 0.999 ± 0.003 | 0.999 ± 0.003 | 0.999 ± 0.002 | 1.000 | 0.7 |
+| SVM-RBF | top-2000 genes | 0.995 ± 0.005 | 0.993 ± 0.008 | 0.995 ± 0.006 | 1.000 | 1.0 |
+| Random forest | top-2000 genes | 0.996 ± 0.006 | 0.996 ± 0.006 | 0.997 ± 0.005 | 1.000 | 2.5 |
+| Logistic regression (L2) | PCA-8 | 0.999 ± 0.003 | 0.999 ± 0.003 | 0.999 ± 0.002 | 1.000 | 0.3 |
+| SVM-RBF | PCA-8 | 0.995 ± 0.005 | 0.994 ± 0.006 | 0.996 ± 0.004 | 1.000 | 0.2 |
+| Random forest | PCA-8 | 0.999 ± 0.003 | 0.999 ± 0.003 | 0.999 ± 0.002 | 1.000 | 0.7 |
+| VQC one-vs-rest (sim.) | PCA-8 | 0.970 ± 0.021 | 0.980 ± 0.013 | 0.975 ± 0.016 | 0.998 ± 0.002 | 210 |
+| QSVM IQP kernel (sim.) | PCA-8 | 0.921 ± 0.023 | 0.898 ± 0.029 | 0.925 ± 0.023 | 0.997 ± 0.004 | 0.06 |
+
+- The task is close to linearly separable: logistic regression on just 8 principal components misclassifies one sample in 801. There is no headroom for any model to win, so E5 tests whether the quantum models can match an easy ceiling.
+- Neither does. Pooled over folds, the VQC's errors are mostly BRCA called LUAD (15) or KIRC (5); the QSVM's are all other classes called BRCA (62 of 801), i.e. its kernel collapses minority-class samples onto the majority class. Its ROC-AUC stays at 0.997, so the ranking is good and the argmax over softmaxed decision values is what fails.
+- With 5 folds and near-zero classical variance, the corrected t-test adds nothing here, so only fold SDs are reported.
+
+## E6: not run
+
+- **E6** (IMG-018 MedMNIST) is not approved, and zenodo.org is blocked by the network policy. It also needs a CNN and therefore a deep-learning library, which is not installed.
 
 ## E7 results: TS-001 MIT-BIH, AAMI N/S/V/F beats, inter-patient DS1 → DS2
 
@@ -133,19 +151,20 @@ Per-class sensitivity and PPV for N and F, plus the confusion matrices, are in `
 - On identical 8-feature training draws, both quantum models trail logistic regression and SVM-RBF on every macro metric. The VQC varies a lot between draws (S sensitivity 0.16–0.55).
 - Deviations from the plan: an MLP replaces the 1D-CNN because no deep-learning library is installed, and with one fixed split there are no folds for the corrected t-test, so draw-to-draw SD is the only spread reported.
 
-## Overall reading (E1–E4, E7)
+## Overall reading (E1–E5, E7)
 
-On five clinical datasets, with matched features and training rows, the simulated 8-qubit VQC and IQP-kernel QSVM never beat the best classical model. Where the comparison has power (E2, E3, E7), they are usually measurably worse, and in a few pairings they are level with RF or HistGB. This is one ansatz, one feature map, no tuning, noiseless simulation and fixed thresholds. It says nothing for or against quantum advantage in general. It does say that these off-the-shelf circuits are not competitive baselines on small clinical tables.
+On five clinical datasets and one gene-expression dataset, with matched features and training rows, the simulated 8-qubit VQC and IQP-kernel QSVM never beat the best classical model. Where the comparison has power (E2, E3, E7), they are usually measurably worse, and in a few pairings they are level with RF or HistGB. This is one ansatz, one feature map, no tuning, noiseless simulation and fixed thresholds. It says nothing for or against quantum advantage in general. It does say that these off-the-shelf circuits are not competitive baselines on small clinical tables.
 
 ## Reproduce
 
 ```bash
 pip install -r healthcare-datasets/requirements-qml.txt      # PennyLane, wfdb
 cd healthcare-datasets/scripts
-python -m hcds.acquire                                       # the 15 approved open files (raw/ is git-ignored)
+python -m hcds.acquire                                       # the approved open files (raw/ is git-ignored)
 python -m hcds.validate                                      # checksums, SHA256SUMS.txt members, parsing
 python -m hcds.benchmark --dataset-id CLN-009 --name CLN-009_wdbc --folds 5 --qubits 4 --vqc-epochs 30   # E1
 python -m hcds.experiments E2 E3 E4 --jobs 4                 # about 10, 4 and 12 minutes on 3-4 vCPUs
 OMP_NUM_THREADS=1 python -m hcds.ecg --jobs 3 --cache /tmp/mitbih_beats.csv   # E7, about 20 minutes
+OMP_NUM_THREADS=1 python -m hcds.rnaseq --jobs 4                # E5, about 8 minutes
 python -m hcds.build_catalog
 ```

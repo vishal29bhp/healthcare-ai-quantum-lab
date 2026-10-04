@@ -131,5 +131,36 @@
    ]
   },
   "task": "classification"
+ },
+ "BIO-001": {
+  "target": "class",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "class",
+    "instance",
+    "sequence"
+   ],
+   "skipinitialspace": true
+  },
+  "task": "classification",
+  "note": "UCI splice junctions: 3,190 60-nt DNA windows, class EI (exon-intron), IE (intron-exon) or N (neither). The sequence string needs per-position one-hot encoding before modelling; a few sequences contain ambiguity codes (D, N, R, S)."
+ },
+ "BIO-002": {
+  "target": "class",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "class",
+    "instance",
+    "sequence"
+   ],
+   "skipinitialspace": true
+  },
+  "positive_label": "+",
+  "task": "classification",
+  "note": "UCI E. coli promoters: 106 57-nt sequences, + promoter / - non-promoter. Sequence needs per-position one-hot encoding; leading tabs stripped."
  }
 }
