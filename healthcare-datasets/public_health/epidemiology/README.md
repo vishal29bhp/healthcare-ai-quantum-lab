@@ -12,5 +12,5 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | PH-007 | NNDSS Weekly Data | data.cdc.gov (Socrata) | Not reported in metadata | Open (no login) | Access verified |
 | PH-008 | PLACES: Local Data for Better Health, County Data, 2025 release | data.cdc.gov (Socrata) | Public Domain | Open (no login) | Access verified |
 | PH-013 | IHME Global Burden of Disease (GBD) Results Tool | IHME GHDx | IHME FREE-OF-CHARGE NON-COMMERCIAL USER AGREEMENT (May 2020) | Not verified: Non-commercial use only; commercial users must contact IHME; registration requirement not confirmed (Results Tool page returned 403) | Access verified |
-| PH-014 | Our World in Data COVID-19 dataset | GitHub (owid/covid-19-data) | Creative Commons BY license | Open (no login) | Access verified |
+| PH-014 | Our World in Data COVID-19 dataset | GitHub (owid/covid-19-data) | Creative Commons BY license | Open (no login) | Parsed |
 | PH-018 | DHS Program (Demographic and Health Surveys) | The DHS Program (ICF/USAID) | Terms of Use Statement required for GPS, HIV and biomarker datasets | Registration / click-through terms: Registered user; request with project title and analysis description; review in 24-48 h; send resulting publications (PDF) to DHS archive | Access verified |
