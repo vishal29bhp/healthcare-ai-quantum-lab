@@ -10,7 +10,10 @@ The Snowflake data is NOT de-identified, so this module never pulls raw rows:
 
 Credentials come from environment variables only and are never printed or logged:
 ``SNOWFLAKE_ACCOUNT``, ``SNOWFLAKE_USER`` and ``SNOWFLAKE_PRIVATE_KEY`` (a PEM key-pair key, or a programmatic
-access token), plus optional ``SNOWFLAKE_ROLE``, ``SNOWFLAKE_WAREHOUSE`` and ``SNOWFLAKE_PRIVATE_KEY_PASSPHRASE``.
+access token), plus optional ``SNOWFLAKE_ROLE``, ``SNOWFLAKE_WAREHOUSE``, ``SNOWFLAKE_PRIVATE_KEY_PASSPHRASE`` and
+``SNOWFLAKE_REGION`` (e.g. ``ap-southeast-1``, appended to a bare account locator outside AWS us-west-2).
+A programmatic access token is only accepted when the user has a network policy or an authentication policy with
+``PAT_POLICY = (NETWORK_POLICY_EVALUATION = ENFORCED_NOT_REQUIRED)``; otherwise login fails with error 390432.
 Outputs are Parquet files under the git-ignored ``snowflake/raw/`` folder, each with a SHA-256 manifest row.
 """
 from __future__ import annotations
@@ -81,8 +84,12 @@ def connect():
     import snowflake.connector  # imported lazily so the rest of hcds works without it
 
     secret = os.environ["SNOWFLAKE_PRIVATE_KEY"].strip()
+    account = os.environ["SNOWFLAKE_ACCOUNT"].strip()
+    region = os.environ.get("SNOWFLAKE_REGION", "").strip()
+    if region and "." not in account and "-" not in account:  # bare locator outside us-west-2
+        account = f"{account}.{region}"
     params = {
-        "account": os.environ["SNOWFLAKE_ACCOUNT"],
+        "account": account,
         "user": os.environ["SNOWFLAKE_USER"],
         "role": os.environ.get("SNOWFLAKE_ROLE"),
         "warehouse": os.environ.get("SNOWFLAKE_WAREHOUSE"),
@@ -181,7 +188,9 @@ def profile_table(conn, table_cols):
         for row in _rows(cur, f"select {expr}::varchar as v, count(*) as n from {fqn} group by 1"):
             out.append({"column": col.column_name, "kind": f"count_{cls}", "value": row["v"],
                         "n": row["n"] if row["n"] >= MIN_CELL else None})  # None = suppressed (n < 11)
-    return pd.DataFrame(out)
+    frame = pd.DataFrame(out)
+    frame["value"] = frame["value"].map(lambda v: None if v is None else str(v))  # mixed labels and stats
+    return frame
 
 
 def _save(frame, path: Path, dataset_id: str, note: str) -> None:
@@ -219,8 +228,12 @@ def main(argv=None) -> int:
                 if args.tables and fqn not in args.tables:
                     continue
                 log.info("profiling %s", fqn)
-                _save(profile_table(conn, cols), OUT_DIR / "profiles" / f"{'__'.join(key)}.parquet",
-                      f"SNOWFLAKE-{key[2]}", fqn)
+                try:
+                    frame = profile_table(conn, cols)
+                except Exception as exc:  # e.g. a shared view we may not aggregate; keep going
+                    log.warning("could not profile %s: %s", fqn, type(exc).__name__)
+                    continue
+                _save(frame, OUT_DIR / "profiles" / f"{'__'.join(key)}.parquet", f"SNOWFLAKE-{key[2]}", fqn)
     finally:
         conn.close()
     return 0
