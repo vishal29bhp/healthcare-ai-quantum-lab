@@ -48,7 +48,7 @@ Open the URL that Streamlit prints (normally <http://localhost:8501>).
 | Page | What it does |
 |---|---|
 | **Home** (`app.py`) | Upload a CSV, TSV, XLSX or XLS file (max 20 MB), profile it, and train a random-forest baseline. Try `sample_data/synthetic_patient_outcomes.csv` with target `risk_label` (classification) or `length_of_stay` (regression). |
-| **Dataset Explorer** (`pages/1_Dataset_Explorer.py`) | Browse the 117-dataset catalogue by category, status and access level, and preview downloaded files. It appears in the sidebar once PR #4 is merged. |
+| **Dataset Explorer** (`pages/1_Dataset_Explorer.py`) | Browse the 117-dataset catalogue by category, subcategory, access level, licence family and status, open each dataset's full record, and preview downloaded files, including files inside zip archives. Previews need the files fetched first (step 3). |
 
 Stop the app with `Ctrl+C`.
 
