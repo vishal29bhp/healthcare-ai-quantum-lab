@@ -34,3 +34,10 @@ def test_cross_validation_caps_folds_at_smallest_class_and_can_be_skipped():
     assert result.cv_folds == 3
     assert "reduced from 5 to 3" in result.notes[0]
     assert run_baseline(frame, "target", "classification", cv_folds=0).cv_metrics == {}
+
+
+def test_regression_folds_keep_two_rows_per_validation_fold():
+    frame = pd.DataFrame({"x": range(10), "target": [value * 1.5 for value in range(10)]})
+    result = run_baseline(frame, "target", "regression", cv_folds=10)
+    assert result.cv_folds == 5
+    assert all(value == value for value in result.cv_metrics.values())  # no NaN

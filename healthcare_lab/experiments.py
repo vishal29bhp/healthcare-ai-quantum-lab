@@ -103,7 +103,8 @@ def cross_validate_pipeline(
 ) -> tuple[dict[str, float], int, list[str]]:
     """Return mean/std k-fold metrics, the folds actually used, and any notes.
 
-    Classification uses stratified folds, capped at the smallest class size.
+    Classification uses stratified folds, capped at the smallest class size;
+    regression folds are capped so each validation fold has at least two rows.
     """
     if folds == 0:
         return {}, 0, []
@@ -113,10 +114,11 @@ def cross_validate_pipeline(
         usable = min(folds, int(labels.value_counts().min()))
         splitter: Any = StratifiedKFold(n_splits=usable, shuffle=True, random_state=seed)
     else:
-        usable = min(folds, len(labels))
+        # Every validation fold needs at least two rows, or R² is undefined (NaN).
+        usable = min(folds, len(labels) // 2)
         splitter = KFold(n_splits=usable, shuffle=True, random_state=seed)
     if usable < 2:
-        return {}, 0, ["Cross-validation skipped: a class has fewer than 2 rows."]
+        return {}, 0, ["Cross-validation skipped: not enough rows for 2 folds."]
     notes = [f"Cross-validation reduced from {folds} to {usable} folds to fit the data."] if usable < folds else []
     scorers = CV_SCORERS[task]
     scores = cross_validate(pipeline, features, labels, cv=splitter, scoring=scorers)
