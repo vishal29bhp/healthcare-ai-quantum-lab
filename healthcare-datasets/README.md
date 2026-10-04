@@ -2,7 +2,7 @@
 
 This is a catalogue of 117 healthcare datasets in six categories, with honest per-dataset verification status, an approval-gated acquisition and validation toolchain, QML feasibility estimates, and a first classical-vs-quantum (simulated) benchmark.
 
-> **Status as of 2026-10-04.** Metadata was verified from landing pages. Downloads from source repositories have **not** run yet, because this batch's cloud environment blocked every data host (HTTP 403). One dataset was acquired from a package-bundled mirror and validated end to end. See [Executive summary](#a-executive-summary).
+> **Status as of 2026-10-04 (17:40 UTC).** Metadata was verified for all 117 datasets. 19 open datasets have been downloaded and checksum-verified; 18 of them are also parsed, 11 of those also preprocessing-validated. Experiments E1 to E5 and E7 have been run. The executive summary table below describes the first batch and is kept for the record. For how to run everything, see the [repository README](../README.md#how-to-run).
 
 ## A. Executive summary
 
