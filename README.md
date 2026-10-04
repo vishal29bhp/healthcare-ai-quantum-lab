@@ -21,7 +21,9 @@ pip install -r requirements-dev.txt
 streamlit run app.py
 ```
 
-Then open the local URL printed by Streamlit and upload `sample_data/synthetic_patient_outcomes.csv`. Select `risk_label` for classification or `length_of_stay` for regression.
+The sidebar has a second page, **Dataset Explorer**, for browsing the 117-dataset catalogue in `healthcare-datasets/`: filter by category, subcategory, access level, licence family and verification status, open any dataset's full record (access terms, ML and QML assessment, acquisition and validation evidence), and preview files you have downloaded locally, including CSV/TSV tables and files inside zip archives. Raw data is not committed to git, so previews appear only after you fetch files with `cd healthcare-datasets/scripts && python -m hcds.pipeline --ids <ID>`.
+
+On the main page, open the local URL printed by Streamlit and upload `sample_data/synthetic_patient_outcomes.csv`. Select `risk_label` for classification or `length_of_stay` for regression.
 
 ## Test
 
