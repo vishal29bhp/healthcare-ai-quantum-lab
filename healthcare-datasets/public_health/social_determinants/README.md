@@ -6,6 +6,6 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
-| PH-015 | World Bank World Development Indicators (Health topic) | World Bank Data Catalog | Creative Commons Attribution 4.0 | Open (no login) | Access verified |
+| PH-015 | World Bank World Development Indicators (Health topic) | World Bank Data Catalog | Creative Commons Attribution 4.0 | Open (no login) | Parsed |
 | PH-016 | CDC/ATSDR Social Vulnerability Index (SVI) | CDC/ATSDR GRASP | Not reported | Open (no login): None stated | Source verified |
 | PH-017 | EPA Air Quality System (AQS) / AirData | US EPA | Not reported | Open (no login): Files: none; API requires registration (email + key) | Access verified |

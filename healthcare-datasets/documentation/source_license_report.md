@@ -8,7 +8,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 |---|---|
 | open | 85 |
 | registration | 17 |
-| controlled | 6 |
+| controlled | 11 |
 | credentialed | 5 |
 | unknown | 3 |
 | competition | 1 |
@@ -76,6 +76,8 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | NLP-016 | emrQA | n2c2 DUA | controlled | 2026-10-04 | WebFetch of GitHub README | Access verified |
 | NLP-017 | MTSamples transcribed medical reports | Not reported; may print, share or link for educational purposes with attribution to MTSamples.com | open | 2026-10-04 | WebFetch of mtsamples.com home | Source verified |
 | NLP-018 | CORD-19 | Varies by paper (CC0, CC-BY, Gold OA, Green OA, others) | open | 2026-10-04 | WebFetch of GitHub README | Access verified |
+| NLP-019 | Drug Vocabulary (Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
+| NLP-020 | PubMed Biomedical Research Corpus, OA commercial subset (Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
 | IMG-001 | BraTS 2021 (RSNA-ASNR-MICCAI Brain Tumor Segmentation) | Not reported for data (arXiv paper itself is CC BY 4.0) | registration | 2026-10-04 | WebFetch of UPenn CBICA BraTS 2021 page + arXiv abstract; Synapse page/wiki fetched but returned no dataset details | Access verified |
 | IMG-002 | Brain Tumor MRI Dataset (Nickparvar) | CC BY 4.0 | registration | 2026-10-04 | WebFetch of Kaggle landing page (metadata only) + Kaggle API datasets/view JSON | Access verified |
 | IMG-003 | UPENN-GBM | CC BY 4.0 | open | 2026-10-04 | WebFetch of TCIA collection page | Access verified |
@@ -103,17 +105,20 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | PH-005 | Behavioral Risk Factor Surveillance System (BRFSS) annual survey data | Not reported | open | 2026-10-04 | WebFetch of BRFSS annual data index + 2024 annual data page | Access verified |
 | PH-006 | National Health and Nutrition Examination Survey (NHANES) | Not reported | open | 2026-10-04 | WebFetch of NHANES home, 2021-2023 cycle page, NHANES About page | Access verified |
 | PH-007 | NNDSS Weekly Data | Not reported in metadata | open | 2026-10-04 | Socrata catalog API search + WebFetch of data.cdc.gov/api/views/x9gk-5huc.json | Access verified |
-| PH-008 | PLACES: Local Data for Better Health, County Data, 2025 release | Public Domain | open | 2026-10-04 | Socrata catalog search + WebFetch of swc5-untb.json + cdc.gov/places | Access verified |
-| PH-009 | NCHS - Leading Causes of Death: United States | Public Domain U.S. Government | open | 2026-10-04 | WebFetch of data.cdc.gov/api/views/bi63-dtpu.json | Access verified |
+| PH-008 | PLACES: Local Data for Better Health, County Data, 2025 release | Public Domain | open | 2026-10-04 | Socrata catalog search + WebFetch of swc5-untb.json + cdc.gov/places | Parsed |
+| PH-009 | NCHS - Leading Causes of Death: United States | Public Domain U.S. Government | open | 2026-10-04 | WebFetch of data.cdc.gov/api/views/bi63-dtpu.json | Parsed |
 | PH-010 | National Family Health Survey (NFHS-5), 2019-21 | Not reported on page (OGD platform) | open | 2026-10-04 | WebFetch of data.gov.in NFHS-5 factsheet resource + DHS FR375 PDF; rchiips.org fetch failed (robots.txt) | Source verified |
 | PH-011 | Health Management Information System (HMIS) India | Not reported (references NDSAP) | open | 2026-10-04 | Fetch failed for hmis.mohfw.gov.in (robots.txt ConnectTimeout); WebFetch of data.gov.in HMIS Bihar resource | Source verified |
 | PH-012 | State/UT-wise Total Number of PHCs, SHCs and District Hospitals as per Rural Health Statistics (RHS) 2021-22 | Not reported (none shown) | open | 2026-10-04 | WebFetch of data.gov.in resource page | Source verified |
 | PH-013 | IHME Global Burden of Disease (GBD) Results Tool | IHME FREE-OF-CHARGE NON-COMMERCIAL USER AGREEMENT (May 2020) | unknown | 2026-10-04 | Fetch failed for vizhub (403); WebFetch of ghdx gbd-2023/code, healthdata.org GBD page, IHME user agreement PDF | Access verified |
-| PH-014 | Our World in Data COVID-19 dataset | Creative Commons BY license | open | 2026-10-04 | WebFetch of GitHub repo + public/data/README.md | Access verified |
-| PH-015 | World Bank World Development Indicators (Health topic) | Creative Commons Attribution 4.0 | open | 2026-10-04 | WebFetch of WB Data Catalog WDI page + data.worldbank.org/topic/health + API overview | Access verified |
+| PH-014 | Our World in Data COVID-19 dataset | Creative Commons BY license | open | 2026-10-04 | WebFetch of GitHub repo + public/data/README.md | Parsed |
+| PH-015 | World Bank World Development Indicators (Health topic) | Creative Commons Attribution 4.0 | open | 2026-10-04 | WebFetch of WB Data Catalog WDI page + data.worldbank.org/topic/health + API overview | Parsed |
 | PH-016 | CDC/ATSDR Social Vulnerability Index (SVI) | Not reported | open | 2026-10-04 | WebFetch of SVI landing + data download page | Source verified |
 | PH-017 | EPA Air Quality System (AQS) / AirData | Not reported | open | 2026-10-04 | WebFetch of EPA outdoor air quality page, AirData download files page, AQS API docs | Access verified |
 | PH-018 | DHS Program (Demographic and Health Surveys) | Terms of Use Statement required for GPS, HIV and biomarker datasets | registration | 2026-10-04 | WebFetch of dhsprogram.com/data and Access-Instructions page | Access verified |
+| PH-019 | COVID-19 Epidemiological Data (Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
+| PH-020 | Atlas US Healthcare Reference & Affiliations (sample, Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
+| PH-021 | French National Health and Social Facilities (FINESS, Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
 | TS-001 | MIT-BIH Arrhythmia Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-002 | PTB-XL, a large publicly available electrocardiography dataset | CC BY 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-003 | PTB Diagnostic ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |

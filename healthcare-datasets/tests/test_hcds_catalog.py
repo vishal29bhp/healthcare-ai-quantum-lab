@@ -171,3 +171,19 @@ def test_expected_size_reads_full_length_from_range_or_length():
     whole = SimpleNamespace(status=200, headers={"Content-Length": "1000"})
     unknown = SimpleNamespace(status=200, headers={})
     assert expected_size(partial) == 1000 and expected_size(whole) == 1000 and expected_size(unknown) is None
+
+
+def test_parse_archive_tables_skips_world_bank_preamble(tmp_path):
+    import zipfile
+
+    from hcds.validate import parse_archive_tables
+
+    data = ('﻿"Data Source","World Development Indicators",\r\n\r\n"Last Updated Date","2026-07-13",\r\n\r\n'
+            '"Country Name","Country Code","Indicator Name","Indicator Code","1960","1961",\r\n'
+            '"Aruba","ABW","Life expectancy","SP.DYN.LE00.IN","64.2","64.6",\r\n')
+    path = tmp_path / "wdi.zip"
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("API_8.csv", data.encode("utf-8"))
+        archive.writestr("Metadata_Country_API_8.csv", '"Country Code","Region",\r\n"ABW","Latin America",\r\n')
+    result = parse_archive_tables(path)
+    assert result["tables_parsed"] == 2 and result["total_rows"] == 2

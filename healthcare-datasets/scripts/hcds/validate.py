@@ -128,6 +128,26 @@ def parse_edf_archive(path: Path) -> dict | None:
             "read_record_nan": int(np.isnan(record.p_signal).sum())}
 
 
+def read_csv_skipping_preamble(payload: bytes, compression: str | None = None) -> pd.DataFrame:
+    """Read a CSV, skipping metadata lines above the header if a plain read fails.
+
+    World Bank bulk downloads start with '"Data Source","World Development Indicators",' and a
+    '"Last Updated Date",...' line before the real header; the header is taken to be the first of the
+    leading lines with the widest field count.
+    """
+    try:
+        return pd.read_csv(io.BytesIO(payload), compression=compression, low_memory=False)
+    except pd.errors.ParserError:
+        if compression:
+            raise
+    head = payload.decode("utf-8-sig", errors="replace").splitlines()[:50]
+    widths = [len(fields) for fields in csv.reader(head)]
+    if not widths:
+        raise ValueError("empty CSV")
+    header = widths.index(max(widths))
+    return pd.read_csv(io.BytesIO(payload), skiprows=header, low_memory=False, encoding="utf-8-sig")
+
+
 def parse_archive_tables(path: Path) -> dict | None:
     """Parse every CSV (plain, .csv.gz, or inside one level of nested zip or .tar.gz) in a multi-table archive.
 
@@ -161,7 +181,7 @@ def parse_archive_tables(path: Path) -> dict | None:
             empty.append(name)  # e.g. Empatica tags.csv when no event button was pressed
             continue
         try:
-            frame = pd.read_csv(io.BytesIO(payload), compression=compression, low_memory=False)
+            frame = read_csv_skipping_preamble(payload, compression)
         except Exception as error:
             raise ValueError(f"{name}: {type(error).__name__}: {error}") from error
         rows, columns = rows + len(frame), columns + frame.shape[1]

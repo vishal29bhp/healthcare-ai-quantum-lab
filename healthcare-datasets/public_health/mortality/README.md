@@ -8,4 +8,4 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 |---|---|---|---|---|---|
 | PH-002 | WHO Mortality Database | WHO | Non-commercial: 'no use will be made of them for commercial purposes'; WHO must be credited as source | Open (no login): Accept non-commercial use condition; credit WHO | Access verified |
 | PH-004 | CDC WONDER Underlying Cause of Death | CDC WONDER | Data use restrictions: 'Use these data for health statistical reporting and analysis only. Do not present or publish death counts of 9 or fewer...' | Registration / click-through terms: Agree to data use restrictions before query (no re-identification; report inadvertent discoveries); access_level: click-through agreement | Access verified |
-| PH-009 | NCHS - Leading Causes of Death: United States | data.cdc.gov (Socrata) | Public Domain U.S. Government | Open (no login) | Access verified |
+| PH-009 | NCHS - Leading Causes of Death: United States | data.cdc.gov (Socrata) | Public Domain U.S. Government | Open (no login) | Parsed |

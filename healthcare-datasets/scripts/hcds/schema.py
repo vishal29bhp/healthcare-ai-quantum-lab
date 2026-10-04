@@ -37,7 +37,8 @@ SUBCATEGORIES = {
     "Biomedical/Molecular": {"genomics", "transcriptomics", "proteomics", "protein_structures", "drug_target",
                              "molecular", "pathways"},
     "Physiological/Time-Series": {"ecg", "eeg", "blood_pressure", "spo2", "icu_vitals", "wearable", "sleep"},
-    "Public Health": {"epidemiology", "mortality", "vaccination", "india_health", "social_determinants"},
+    "Public Health": {"epidemiology", "mortality", "vaccination", "india_health", "social_determinants",
+                      "health_services"},
     "Medical Text and Healthcare NLP": {"clinical_text", "biomedical_literature", "medical_qa", "biomedical_ner",
                                         "terminology"},
 }

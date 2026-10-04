@@ -7,9 +7,12 @@ import streamlit as st
 from healthcare_lab.data import MAX_UPLOAD_BYTES, check_dataset, fingerprint_dataset, load_dataset, profile_dataset
 from healthcare_lab.experiments import run_baseline
 from healthcare_lab.registry import record_experiment
+from healthcare_lab.theme import apply_theme, banner
 
-st.set_page_config(page_title="Healthcare AI & Quantum Research Lab", layout="wide")
-st.title("Healthcare AI & Quantum Research Lab")
+st.set_page_config(page_title="Healthcare AI & Quantum Research Lab", page_icon="🩺", layout="wide")
+apply_theme()
+st.title("🩺 Healthcare AI & Quantum Research Lab")
+banner("Profile tabular health data and train reproducible baselines. Open <b>Dataset Explorer</b> in the sidebar to browse the healthcare dataset catalogue.")
 st.warning("Do not upload identifiable patient data, protected health information, credentials, or secrets. Uploaded data is processed in memory only.")
 st.caption(f"Accepted formats: CSV, TSV, XLSX, XLS. Maximum upload size: {MAX_UPLOAD_BYTES // (1024 * 1024)} MB.")
 
@@ -63,6 +66,8 @@ if upload is not None:
                 })
 
 st.divider()
-st.header("QML research roadmap")
-st.info("Planned—not implemented: quantum feature maps, variational quantum classifiers, hybrid quantum-classical optimization, simulator and hardware benchmarking, and noise-aware evaluation.")
-st.caption("Implemented today: reproducible classical tabular ML baselines only. No quantum experiment, quantum hardware execution, or quantum advantage claim is made.")
+st.header("⚛️ Quantum ML research")
+st.info("Simulated quantum models (a variational quantum classifier and an IQP-kernel quantum SVM, in PennyLane) have been "
+        "benchmarked against classical baselines on six healthcare datasets. Classical models matched or beat them every time.")
+st.caption("No quantum hardware was used and no quantum advantage is claimed. Results: "
+           "healthcare-datasets/documentation/experiment_plan.md.")
