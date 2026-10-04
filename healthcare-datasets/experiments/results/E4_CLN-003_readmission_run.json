@@ -1,0 +1,36 @@
+{
+  "experiment": "E4",
+  "dataset_id": "CLN-003",
+  "rows": 99343,
+  "raw_columns": 46,
+  "positives": 11314,
+  "negatives": 88029,
+  "patients": 69990,
+  "cv": "StratifiedGroupKFold, 5 folds x 1 repeats, seeds 42..42",
+  "qubits": 8,
+  "quantum_view": "pca8",
+  "quantum_train_max": 3000,
+  "vqc": "angle (RY) encoding, 2 StronglyEntanglingLayers, <Z0> readout, Adam lr 0.05, batch 32, 1 epochs, 0.5 threshold",
+  "qsvm": "IQPEmbedding (2 repeats) exact fidelity kernel, SVC C=1; class-weighted, scored as sigmoid(decision function)",
+  "decision_threshold": 0.5,
+  "class_weight": "balanced",
+  "data_notes": [
+    "2423 of 101766 encounters discharged to hospice or expired removed (disposition 11, 13, 14, 19, 20, 21), as in Strack et al. 2014",
+    "target = readmitted '<30'; groups = patient_nbr (StratifiedGroupKFold, no patient in train and test)",
+    "dropped encounter_id, patient_nbr (identifiers) and weight (97% missing)",
+    "diag_1-3 mapped to Strack et al. ICD-9 groups; missing categoricals kept as a 'missing' category",
+    "categories under 1% of a training fold pooled by OneHotEncoder(min_frequency=0.01)"
+  ],
+  "wall_clock_s": 84.3,
+  "parallel_jobs": 1,
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.44-fc-v64-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.1",
+    "pennylane": "0.45.1",
+    "quantum_device": "default.qubit (noiseless statevector simulator, analytic expectation values)"
+  }
+}

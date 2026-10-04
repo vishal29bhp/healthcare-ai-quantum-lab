@@ -6,4 +6,4 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
-| TS-009 | BIDMC PPG and Respiration Dataset | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
+| TS-009 | BIDMC PPG and Respiration Dataset | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |

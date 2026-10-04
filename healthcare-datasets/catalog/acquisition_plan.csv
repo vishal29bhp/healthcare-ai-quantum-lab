@@ -2,7 +2,7 @@ dataset_id,url,filename,method,expected_sha256,expected_md5,approved,notes
 CLN-009,sklearn://datasets/data/breast_cancer.csv,breast_cancer_sklearn_copy.csv,sklearn_bundled,,,yes,Redistributed copy of UCI WDBC shipped inside scikit-learn (installed from PyPI); canonical file is the UCI zip below
 CLN-009,https://archive.ics.uci.edu/static/public/17/breast+cancer+wisconsin+diagnostic.zip,breast_cancer_wisconsin_diagnostic.zip,https,,,yes,Canonical UCI zip (50.1 KB); CC BY 4.0
 CLN-001,https://archive.ics.uci.edu/static/public/45/data.csv,heart_disease_data.csv,https,,,yes,UCI Heart Disease processed CSV (CC BY 4.0)
-CLN-002,https://openml.org/data/v1/download/37/diabetes.arff,diabetes_openml37.arff,https,,3cbaa3e54586aa88cf6aacb4033e4470,yes,OpenML 37; md5 from OpenML API
+CLN-002,https://www.openml.org/data/v1/download/37/diabetes.arff,diabetes_openml37.arff,https,,3cbaa3e54586aa88cf6aacb4033e4470,yes,OpenML 37; md5 from OpenML API
 CLN-003,https://archive.ics.uci.edu/static/public/296/diabetes+130-us+hospitals+for+years+1999-2008.zip,diabetes_130_us_hospitals.zip,https,,,yes,~3 MB zip; CC BY 4.0
 CLN-005,https://archive.ics.uci.edu/static/public/529/early+stage+diabetes+risk+prediction+dataset.zip,early_stage_diabetes.zip,https,,,yes,CC BY 4.0
 CLN-006,https://archive.ics.uci.edu/static/public/336/chronic+kidney+disease.zip,chronic_kidney_disease.zip,https,,,yes,CC BY 4.0; ARFF inside zip
@@ -10,8 +10,8 @@ CLN-007,https://archive.ics.uci.edu/static/public/225/ilpd+indian+liver+patient+
 CLN-008,https://archive.ics.uci.edu/static/public/571/hcv+data.zip,hcv_data.zip,https,,,yes,CC BY 4.0
 CLN-010,https://archive.ics.uci.edu/static/public/519/heart+failure+clinical+records.zip,heart_failure_clinical_records.zip,https,,,yes,CC BY 4.0
 CLN-011,https://archive.ics.uci.edu/static/public/383/cervical+cancer+risk+factors.zip,cervical_cancer_risk_factors.zip,https,,,yes,CC BY 4.0
-CLN-013,https://physionet.org/content/mimic-iv-demo/get-zip/2.2/,mimic_iv_demo_2.2.zip,https,,,yes,Open ODbL demo (100 patients); verify against SHA256SUMS.txt after unzip
-TS-001,https://physionet.org/content/mitdb/get-zip/1.0.0/,mitdb_1.0.0.zip,https,,,yes,ZIP 73.5 MB; verify members against SHA256SUMS.txt
-TS-009,https://physionet.org/content/bidmc/get-zip/1.0.0/,bidmc_1.0.0.zip,https,,,yes,207.7 MB uncompressed
-TS-017,https://physionet.org/content/noneeg/get-zip/1.0.0/,noneeg_1.0.0.zip,https,,,yes,3.7 MB uncompressed
-TS-020,https://physionet.org/content/wearable-exam-stress/get-zip/1.0.0/,wearable_exam_stress_1.0.0.zip,https,,,yes,82.1 MB uncompressed
+CLN-013,https://www.physionet.org/content/mimic-iv-demo/get-zip/2.2/,mimic_iv_demo_2.2.zip,https,,,yes,Open ODbL demo (100 patients); verify against SHA256SUMS.txt after unzip
+TS-001,https://www.physionet.org/content/mitdb/get-zip/1.0.0/,mitdb_1.0.0.zip,https,,,yes,ZIP 73.5 MB; verify members against SHA256SUMS.txt
+TS-009,https://www.physionet.org/content/bidmc/get-zip/1.0.0/,bidmc_1.0.0.zip,https,,,yes,207.7 MB uncompressed
+TS-017,https://www.physionet.org/content/noneeg/get-zip/1.0.0/,noneeg_1.0.0.zip,https,,,yes,3.7 MB uncompressed
+TS-020,https://www.physionet.org/content/wearable-exam-stress/get-zip/1.0.0/,wearable_exam_stress_1.0.0.zip,https,,,yes,82.1 MB uncompressed

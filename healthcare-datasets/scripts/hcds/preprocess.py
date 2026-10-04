@@ -30,7 +30,12 @@ class PreparedSplit:
     notes: list[str] = field(default_factory=list)
 
 
-def tabular_preprocessor(features: pd.DataFrame, *, scale: str = "standard") -> ColumnTransformer:
+def tabular_preprocessor(features: pd.DataFrame, *, scale: str = "standard",
+                         min_frequency: float | None = None) -> ColumnTransformer:
+    """Median-impute + scale numeric columns; mode-impute + one-hot the rest.
+
+    ``min_frequency`` pools categories rarer than that share of the training data into one infrequent column.
+    """
     numeric = features.select_dtypes(include=["number", "bool"]).columns.tolist()
     categorical = [c for c in features.columns if c not in numeric]
     scaler = StandardScaler() if scale == "standard" else MinMaxScaler(feature_range=(0.0, np.pi))
@@ -38,18 +43,19 @@ def tabular_preprocessor(features: pd.DataFrame, *, scale: str = "standard") -> 
         ("numeric", Pipeline([("impute", SimpleImputer(strategy="median")), ("scale", scaler)]), numeric),
         ("categorical", Pipeline([
             ("impute", SimpleImputer(strategy="most_frequent")),
-            ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+            ("onehot", OneHotEncoder(handle_unknown="infrequent_if_exist" if min_frequency else "ignore",
+                                     min_frequency=min_frequency, sparse_output=False)),
         ]), categorical),
     ])
 
 
-def quantum_ready_pipeline(features: pd.DataFrame, n_qubits: int) -> Pipeline:
+def quantum_ready_pipeline(features: pd.DataFrame, n_qubits: int, min_frequency: float | None = None) -> Pipeline:
     """Impute/encode -> standardise -> PCA to ``n_qubits`` components -> rescale to [0, pi] for angle encoding.
 
     All steps are fitted on training data only when used inside cross-validation or fit on x_train.
     """
     return Pipeline([
-        ("prep", tabular_preprocessor(features, scale="standard")),
+        ("prep", tabular_preprocessor(features, scale="standard", min_frequency=min_frequency)),
         ("pca", PCA(n_components=n_qubits, random_state=0)),
         ("angles", MinMaxScaler(feature_range=(0.0, np.pi))),
     ])
@@ -86,11 +92,11 @@ def cv_splitter(y: pd.Series, groups: pd.Series | None = None, n_splits: int = 5
 
 
 def validate_preprocessing(frame: pd.DataFrame, target: str, *, group: str | None = None, n_qubits: int = 4,
-                           task: str = "classification") -> dict:
+                           task: str = "classification", min_frequency: float | None = None) -> dict:
     """Run the pipeline end to end and assert the invariants that justify ``preprocessing_validated``."""
     prepared = split(frame, target, group=group, task=task)
     checks: dict[str, bool] = {}
-    pipe = tabular_preprocessor(prepared.x_train).fit(prepared.x_train)
+    pipe = tabular_preprocessor(prepared.x_train, min_frequency=min_frequency).fit(prepared.x_train)
     train_t, test_t = pipe.transform(prepared.x_train), pipe.transform(prepared.x_test)
     checks["row_count_preserved"] = (
         train_t.shape[0] + test_t.shape[0] + prepared.dropped_missing_target == len(frame)
@@ -101,7 +107,7 @@ def validate_preprocessing(frame: pd.DataFrame, target: str, *, group: str | Non
     if prepared.x_train.select_dtypes(include=["number", "bool"]).shape[1]:
         # Standardised numeric columns have mean ~0 on the data the scaler was fitted on, i.e. train only.
         checks["scaler_fitted_on_train_only"] = bool(np.allclose(train_t[:, :1].mean(), 0.0, atol=1e-6))
-    q = quantum_ready_pipeline(prepared.x_train, n_qubits).fit(prepared.x_train)
+    q = quantum_ready_pipeline(prepared.x_train, n_qubits, min_frequency=min_frequency).fit(prepared.x_train)
     angles = q.transform(prepared.x_test)
     checks["quantum_features_shape"] = angles.shape[1] == n_qubits
     checks["train_angles_within_0_pi"] = bool(

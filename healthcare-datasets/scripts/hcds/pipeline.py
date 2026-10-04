@@ -23,13 +23,18 @@ from .validate import PARSE_CONFIG, append_validation, read_tabular, validate_ma
 
 def preprocessing_stage(dataset_ids: set[str] | None = None) -> list[dict]:
     config = json.loads(PARSE_CONFIG.read_text()) if PARSE_CONFIG.exists() else {}
-    successes = {r["dataset_id"]: r for r in read_csv_rows(MANIFEST_PATH) if r["download_status"] == "success"}
+    successes = {}
+    for r in read_csv_rows(MANIFEST_PATH):  # latest success per dataset, restricted to the configured file if named
+        cfg = config.get(r["dataset_id"], {})
+        if r["download_status"] == "success" and cfg.get("file") in (None, r["requested_files"]):
+            successes[r["dataset_id"]] = r
     results = []
     for dataset_id, cfg in config.items():
         if dataset_ids and dataset_id not in dataset_ids or dataset_id not in successes:
             continue
         frame = read_tabular(ROOT / successes[dataset_id]["local_path"], **cfg.get("read_options", {}))
-        outcome = validate_preprocessing(frame, cfg["target"], group=cfg.get("group"), task=cfg.get("task", "classification"))
+        outcome = validate_preprocessing(frame, cfg["target"], group=cfg.get("group"), task=cfg.get("task", "classification"),
+                                         min_frequency=cfg.get("min_frequency"))
         entry = {"dataset_id": dataset_id, "stage": "preprocessing_validated", "ok": str(outcome["ok"]).lower(),
                  "details": json.dumps(outcome)}
         append_validation(entry)
@@ -57,6 +62,7 @@ def main(argv: list[str] | None = None) -> int:
         targets={k: v["target"] for k, v in config.items() if k in fresh},
         read_options={k: v.get("read_options", {}) for k, v in config.items()},
         dataset_ids=fresh,
+        files={k: v["file"] for k, v in config.items() if "file" in v},
     )
     preprocessing_stage(fresh)
     return build()

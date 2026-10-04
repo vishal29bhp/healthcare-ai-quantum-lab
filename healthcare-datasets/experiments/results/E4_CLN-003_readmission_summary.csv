@@ -1,0 +1,9 @@
+family,model,features,accuracy,balanced_accuracy,precision,recall_sensitivity,specificity,f1,roc_auc,pr_auc,brier,train_s,infer_s,n_train
+classical,HistGradientBoosting,all,0.676 ± nan,0.619 ± nan,0.186 ± nan,0.545 ± nan,0.693 ± nan,0.277 ± nan,0.666 ± nan,0.218 ± nan,0.214 ± nan,6.977 ± nan,0.269 ± nan,79473
+classical,LogisticRegression,all,0.670 ± nan,0.609 ± nan,0.179 ± nan,0.529 ± nan,0.688 ± nan,0.268 ± nan,0.655 ± nan,0.202 ± nan,0.228 ± nan,8.791 ± nan,0.285 ± nan,79473
+classical,HistGradientBoosting,pca8,0.636 ± nan,0.594 ± nan,0.165 ± nan,0.540 ± nan,0.649 ± nan,0.252 ± nan,0.633 ± nan,0.188 ± nan,0.227 ± nan,7.995 ± nan,0.385 ± nan,79473
+classical,LogisticRegression,pca8,0.660 ± nan,0.594 ± nan,0.169 ± nan,0.508 ± nan,0.679 ± nan,0.254 ± nan,0.632 ± nan,0.186 ± nan,0.235 ± nan,4.164 ± nan,0.280 ± nan,79473
+classical,HistGradientBoosting,pca8_sub3000,0.819 ± nan,0.532 ± nan,0.176 ± nan,0.160 ± nan,0.903 ± nan,0.167 ± nan,0.584 ± nan,0.151 ± nan,0.136 ± nan,3.751 ± nan,0.476 ± nan,3000
+classical,LogisticRegression,pca8_sub3000,0.657 ± nan,0.585 ± nan,0.164 ± nan,0.491 ± nan,0.679 ± nan,0.246 ± nan,0.624 ± nan,0.177 ± nan,0.230 ± nan,0.212 ± nan,0.433 ± nan,3000
+quantum kernel (simulated),QSVM_IQP_fidelity_kernel,pca8_sub3000,0.821 ± nan,0.507 ± nan,0.130 ± nan,0.102 ± nan,0.913 ± nan,0.114 ± nan,0.542 ± nan,0.126 ± nan,0.161 ± nan,0.590 ± nan,8.626 ± nan,3000
+quantum (simulated),VQC_angle_SEL2,pca8_sub3000,0.158 ± nan,0.507 ± nan,0.115 ± nan,0.958 ± nan,0.055 ± nan,0.206 ± nan,0.540 ± nan,0.126 ± nan,0.297 ± nan,7.969 ± nan,9.423 ± nan,3000

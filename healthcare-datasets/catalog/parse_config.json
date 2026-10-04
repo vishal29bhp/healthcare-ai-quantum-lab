@@ -41,6 +41,95 @@
   },
   "note": "scikit-learn's bundled copy of UCI WDBC: first line is '569,30,malignant,benign' metadata; label 0=malignant, 1=benign (sklearn encoding, inverse of the UCI M/B letter). Benchmarks treat malignant (label 0) as the positive class.",
   "positive_label": 0,
+  "task": "classification",
+  "file": "breast_cancer_sklearn_copy.csv"
+ },
+ "CLN-001": {
+  "target": "num",
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "UCI processed Cleveland data; num 0-4, experiments use num > 0 as the positive class (E3)"
+ },
+ "CLN-002": {
+  "target": "class",
+  "positive_label": "tested_positive",
+  "task": "classification",
+  "note": "OpenML 37 ARFF; zeros in plas, pres, skin, insu, mass are missing measurements (recoded in E2)"
+ },
+ "CLN-003": {
+  "target": "readmitted",
+  "group": "patient_nbr",
+  "min_frequency": 0.01,
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "na_values": [
+    "?"
+   ],
+   "keep_default_na": false
+  },
+  "note": "diabetic_data.csv; '?' is missing, 'None' in max_glu_serum/A1Cresult means not measured; group on patient_nbr"
+ },
+ "CLN-005": {
+  "target": "class",
+  "positive_label": "Positive",
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification"
+ },
+ "CLN-007": {
+  "target": "Selector",
+  "positive_label": 1,
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "header": null,
+   "names": [
+    "Age",
+    "Gender",
+    "TB",
+    "DB",
+    "Alkphos",
+    "Sgpt",
+    "Sgot",
+    "TP",
+    "ALB",
+    "A/G Ratio",
+    "Selector"
+   ]
+  },
+  "note": "ILPD CSV has no header row; Selector 1 = liver patient, 2 = not"
+ },
+ "CLN-008": {
+  "target": "Category",
+  "task": "classification",
+  "read_options": {
+   "sep": ",",
+   "index_col": 0
+  },
+  "note": "hcvdat0.csv; first column is a row index"
+ },
+ "CLN-010": {
+  "target": "DEATH_EVENT",
+  "positive_label": 1,
+  "read_options": {
+   "sep": ","
+  },
+  "task": "classification",
+  "note": "'time' is follow-up length and leaks the outcome for prediction tasks; drop it for prognosis models"
+ },
+ "CLN-011": {
+  "target": "Biopsy",
+  "positive_label": 1,
+  "read_options": {
+   "sep": ",",
+   "na_values": [
+    "?"
+   ]
+  },
   "task": "classification"
  }
 }

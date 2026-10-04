@@ -55,12 +55,12 @@ def metrics(y_true, y_pred, y_score) -> dict[str, float]:
     }
 
 
-def classical_models(seed: int) -> dict:
+def classical_models(seed: int, class_weight: str | None = None) -> dict:
     return {
-        "LogisticRegression": LogisticRegression(max_iter=5000, random_state=seed),
-        "SVM_RBF": SVC(kernel="rbf", probability=True, random_state=seed),
-        "RandomForest": RandomForestClassifier(n_estimators=300, random_state=seed, n_jobs=-1),
-        "HistGradientBoosting": HistGradientBoostingClassifier(random_state=seed),
+        "LogisticRegression": LogisticRegression(max_iter=5000, random_state=seed, class_weight=class_weight),
+        "SVM_RBF": SVC(kernel="rbf", probability=True, random_state=seed, class_weight=class_weight),
+        "RandomForest": RandomForestClassifier(n_estimators=300, random_state=seed, n_jobs=-1, class_weight=class_weight),
+        "HistGradientBoosting": HistGradientBoostingClassifier(random_state=seed, class_weight=class_weight),
     }
 
 
@@ -73,12 +73,13 @@ class VariationalClassifier:
     """Angle-encoded (RY) data, StronglyEntanglingLayers ansatz, <Z0> readout mapped to P(y=1). Adam, minibatches."""
 
     def __init__(self, n_qubits: int, n_layers: int = 2, epochs: int = 30, batch: int = 32, lr: float = 0.05,
-                 seed: int = 0) -> None:
+                 seed: int = 0, class_weight: str | None = None) -> None:
         import pennylane as qml
         from pennylane import numpy as pnp
 
         self.qml, self.pnp = qml, pnp
         self.n_qubits, self.n_layers, self.epochs, self.batch, self.lr, self.seed = n_qubits, n_layers, epochs, batch, lr, seed
+        self.class_weight = class_weight  # "balanced": weight each class by n / (2 * n_class), as scikit-learn does
         dev = qml.device("default.qubit", wires=n_qubits)
 
         @qml.qnode(dev)
@@ -102,9 +103,12 @@ class VariationalClassifier:
         x = pnp.array(x, requires_grad=False)
         y = pnp.array(y.astype(float), requires_grad=False)
 
+        pos = float(y.mean()) if self.class_weight == "balanced" else 0.5
+        w_pos, w_neg = 0.5 / pos, 0.5 / (1 - pos)
+
         def loss(w, b, xb, yb):
             p = pnp.clip(self._proba(w, b, xb), 1e-6, 1 - 1e-6)
-            return -pnp.mean(yb * pnp.log(p) + (1 - yb) * pnp.log(1 - p))
+            return -pnp.mean(w_pos * yb * pnp.log(p) + w_neg * (1 - yb) * pnp.log(1 - p))
 
         for _ in range(self.epochs):
             order = rng.permutation(len(y))
@@ -118,8 +122,8 @@ class VariationalClassifier:
         return np.asarray(self._proba(self.weights_, self.bias_, self.pnp.array(x)), dtype=float)
 
 
-def iqp_states(x: np.ndarray, n_qubits: int) -> np.ndarray:
-    """Statevectors of an IQP (ZZ-type) feature map, computed once per sample for an exact fidelity kernel."""
+def iqp_states_pennylane(x: np.ndarray, n_qubits: int) -> np.ndarray:
+    """Statevectors of PennyLane's IQPEmbedding (n_repeats=2), one circuit per sample. Reference for iqp_states."""
     import pennylane as qml
 
     dev = qml.device("default.qubit", wires=n_qubits)
@@ -130,6 +134,35 @@ def iqp_states(x: np.ndarray, n_qubits: int) -> np.ndarray:
         return qml.state()
 
     return np.stack([np.asarray(state(sample)) for sample in x])
+
+
+def _walsh_hadamard(states: np.ndarray) -> np.ndarray:
+    """Apply H on every qubit to a batch of statevectors (rows), in O(n 2^n) per state."""
+    out, h, dim = states.copy(), 1, states.shape[1]
+    while h < dim:
+        out = out.reshape(len(states), -1, 2, h)
+        out = np.stack([out[:, :, 0] + out[:, :, 1], out[:, :, 0] - out[:, :, 1]], axis=2)
+        h *= 2
+    return out.reshape(len(states), dim) / np.sqrt(dim)
+
+
+def iqp_states(x: np.ndarray, n_qubits: int, n_repeats: int = 2) -> np.ndarray:
+    """Exact statevectors of PennyLane's IQPEmbedding, computed directly with numpy.
+
+    Each repeat is H on all wires, RZ(x_i) on wire i, then MultiRZ(x_i x_j) on every pair: all diagonal after the
+    Hadamards, so one repeat is a phase vector times a Walsh-Hadamard transform. Wire 0 is the most significant bit,
+    as in PennyLane. Matches ``iqp_states_pennylane`` to ~1e-15 (see tests) and is far faster for large batches.
+    """
+    x = np.asarray(x, dtype=float)
+    dim = 2 ** n_qubits
+    z = 1 - 2 * ((np.arange(dim)[:, None] >> (n_qubits - 1 - np.arange(n_qubits))) & 1)  # (dim, n) in {+1, -1}
+    i, j = np.triu_indices(n_qubits, k=1)
+    phase = x @ z.T + (x[:, i] * x[:, j]) @ (z[:, i] * z[:, j]).T  # (samples, dim)
+    diag = np.exp(-0.5j * phase)
+    states = np.full((len(x), dim), dim ** -0.5, dtype=complex) * diag
+    for _ in range(n_repeats - 1):
+        states = diag * _walsh_hadamard(states)
+    return states
 
 
 def fidelity_kernel(a: np.ndarray, b: np.ndarray) -> np.ndarray:
@@ -193,7 +226,8 @@ def load_acquired(dataset_id: str) -> tuple[pd.DataFrame, str]:
     from .validate import PARSE_CONFIG, read_tabular
 
     cfg = json.loads(PARSE_CONFIG.read_text())[dataset_id]
-    rows = [r for r in read_csv_rows(MANIFEST_PATH) if r["dataset_id"] == dataset_id and r["download_status"] == "success"]
+    rows = [r for r in read_csv_rows(MANIFEST_PATH) if r["dataset_id"] == dataset_id and r["download_status"] == "success"
+            and cfg.get("file") in (None, r["requested_files"])]
     if not rows:
         raise SystemExit(f"{dataset_id} has no successful acquisition in the manifest; run hcds.pipeline first")
     frame = read_tabular(ROOT / rows[-1]["local_path"], **cfg.get("read_options", {}))

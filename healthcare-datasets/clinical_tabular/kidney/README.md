@@ -6,4 +6,4 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
-| CLN-006 | Chronic Kidney Disease | UCI Machine Learning Repository | CC BY 4.0 (Creative Commons Attribution 4.0 International) | Open (no login): None (no login) | Access verified |
+| CLN-006 | Chronic Kidney Disease | UCI Machine Learning Repository | CC BY 4.0 (Creative Commons Attribution 4.0 International) | Open (no login): None (no login) | Integrity verified |

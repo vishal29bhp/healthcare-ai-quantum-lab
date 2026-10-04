@@ -37,19 +37,19 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | BIO-018 | KEGG | Copyright Kanehisa Laboratories; academic website use free; academic service providers need FTP academic subscription; non-academic use requires commercial licence (Pathway Solutions) | registration | 2026-10-04 | WebFetch of kegg.jp/kegg/legal.html + docs/statistics.html | Access verified |
 | BIO-019 | Davis / KIBA drug-target affinity benchmarks (via TDC) | CC BY 4.0 (stated on TDC DTI page) | open | 2026-10-04 | WebFetch of TDC DTI page (twice) | Access verified |
 | BIO-020 | Tox21 Data Challenge 2014 | Not reported | open | 2026-10-04 | WebFetch of challenge homepage + data.jsp | Access verified |
-| CLN-001 | Heart Disease | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page + UCI API JSON (id=45; record name matches Heart Disease) | Access verified |
-| CLN-002 | Pima Indians Diabetes (OpenML 'diabetes') | Public (OpenML licence field) | open | 2026-10-04 | WebFetch of OpenML JSON data API + data qualities API | Access verified |
-| CLN-003 | Diabetes 130-US Hospitals for Years 1999-2008 | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
+| CLN-001 | Heart Disease | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page + UCI API JSON (id=45; record name matches Heart Disease) | Preprocessing validated |
+| CLN-002 | Pima Indians Diabetes (OpenML 'diabetes') | Public (OpenML licence field) | open | 2026-10-04 | WebFetch of OpenML JSON data API + data qualities API | Preprocessing validated |
+| CLN-003 | Diabetes 130-US Hospitals for Years 1999-2008 | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
 | CLN-004 | CDC Diabetes Health Indicators | Not reported (UCI page: 'See linked dataset for licensing information') | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Source verified |
-| CLN-005 | Early Stage Diabetes Risk Prediction | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
-| CLN-006 | Chronic Kidney Disease | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
-| CLN-007 | ILPD (Indian Liver Patient Dataset) | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
-| CLN-008 | Hepatitis C Virus (HCV) data | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
+| CLN-005 | Early Stage Diabetes Risk Prediction | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
+| CLN-006 | Chronic Kidney Disease | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Integrity verified |
+| CLN-007 | ILPD (Indian Liver Patient Dataset) | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
+| CLN-008 | Hepatitis C Virus (HCV) data | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
 | CLN-009 | Breast Cancer Wisconsin (Diagnostic) | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
-| CLN-010 | Heart Failure Clinical Records | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
-| CLN-011 | Cervical Cancer (Risk Factors) | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Access verified |
+| CLN-010 | Heart Failure Clinical Records | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
+| CLN-011 | Cervical Cancer (Risk Factors) | CC BY 4.0 (Creative Commons Attribution 4.0 International) | open | 2026-10-04 | WebFetch of UCI landing page (UCI API not used: WebFetch returned id 45 for all ids) | Preprocessing validated |
 | CLN-012 | MIMIC-IV v3.1 | PhysioNet Credentialed Health Data License 1.5.0 | credentialed | 2026-10-04 | WebFetch of PhysioNet project page | Access verified |
-| CLN-013 | MIMIC-IV Clinical Database Demo | Open Data Commons Open Database License v1.0 (ODbL) | open | 2026-10-04 | WebFetch of PhysioNet project page | Access verified |
+| CLN-013 | MIMIC-IV Clinical Database Demo | Open Data Commons Open Database License v1.0 (ODbL) | open | 2026-10-04 | WebFetch of PhysioNet project page | Parsed |
 | CLN-014 | eICU Collaborative Research Database | PhysioNet Credentialed Health Data License 1.5.0 | credentialed | 2026-10-04 | WebFetch of PhysioNet project page | Access verified |
 | CLN-015 | Synthea synthetic patient data (SyntheticMass) | Apache-2.0 (generator code, GitHub); sample data license not reported | open | 2026-10-04 | WebFetch of synthetichealth.github.io/synthea + GitHub repo; synthea.mitre.org/downloads failed (SSL/robots) | Source verified |
 | CLN-016 | SEER Research Data | Not reported (data use agreement terms on registration) | registration | 2026-10-04 | WebFetch of seer.cancer.gov/data/ | Access verified |
@@ -114,7 +114,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | PH-016 | CDC/ATSDR Social Vulnerability Index (SVI) | Not reported | open | 2026-10-04 | WebFetch of SVI landing + data download page | Source verified |
 | PH-017 | EPA Air Quality System (AQS) / AirData | Not reported | open | 2026-10-04 | WebFetch of EPA outdoor air quality page, AirData download files page, AQS API docs | Access verified |
 | PH-018 | DHS Program (Demographic and Health Surveys) | Terms of Use Statement required for GPS, HIV and biomarker datasets | registration | 2026-10-04 | WebFetch of dhsprogram.com/data and Access-Instructions page | Access verified |
-| TS-001 | MIT-BIH Arrhythmia Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-001 | MIT-BIH Arrhythmia Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-002 | PTB-XL, a large publicly available electrocardiography dataset | CC BY 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-003 | PTB Diagnostic ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-004 | AF Classification from a Short Single Lead ECG Recording: The PhysioNet/Computing in Cardiology Challenge 2017 | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
@@ -122,7 +122,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | TS-006 | EEG Motor Movement/Imagery Dataset | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-007 | Sleep-EDF Database Expanded | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-008 | Temple University Hospital EEG Corpus (TUEG) and subsets | Not reported (data use agreement form required) | registration | 2026-10-04 | WebFetch of NEDC TUH EEG landing page | Access verified |
-| TS-009 | BIDMC PPG and Respiration Dataset | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-009 | BIDMC PPG and Respiration Dataset | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-010 | MIMIC-III Waveform Database Matched Subset | Open Data Commons Open Database License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-011 | MIMIC-IV Waveform Database | Open Data Commons Open Database License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-012 | WESAD (Wearable Stress and Affect Detection) | Not reported on UCI page (refers to linked dataset for licensing) | unknown | 2026-10-04 | WebFetch of UCI landing page (UCI API endpoint returned unrelated dataset id 45) | Source verified |
@@ -130,7 +130,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | TS-014 | Apnea-ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-015 | CAP Sleep Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-016 | Cuff-Less Blood Pressure Estimation | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API endpoint returned unrelated dataset id 45) | Access verified |
-| TS-017 | Non-EEG Dataset for Assessment of Neurological Status | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-017 | Non-EEG Dataset for Assessment of Neurological Status | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-018 | Icentia11k Single Lead Continuous Raw Electrocardiogram Dataset | CC BY-NC-SA 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-019 | Early Prediction of Sepsis from Clinical Data: The PhysioNet/Computing in Cardiology Challenge 2019 | CC BY 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
-| TS-020 | A Wearable Exam Stress Dataset for Predicting Cognitive Performance in Real-World Settings | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-020 | A Wearable Exam Stress Dataset for Predicting Cognitive Performance in Real-World Settings | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
