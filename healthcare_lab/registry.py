@@ -47,5 +47,14 @@ def record_experiment(path: str | Path, fingerprint: str, rows: int, columns: in
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (datetime.now(timezone.utc).isoformat(), fingerprint, rows, columns, target, result.task,
              result.model_name, result.seed, result.train_rows, result.test_rows,
-             json.dumps(result.metrics), json.dumps(software_versions())),
+             json.dumps(_all_metrics(result)), json.dumps(software_versions())),
         )
+
+
+def _all_metrics(result: ExperimentResult) -> dict[str, float]:
+    """Held-out metrics plus cross-validation metrics under a ``cv_`` prefix."""
+    metrics = dict(result.metrics)
+    if result.cv_folds:
+        metrics["cv_folds"] = result.cv_folds
+        metrics.update({f"cv_{name}": value for name, value in result.cv_metrics.items()})
+    return metrics

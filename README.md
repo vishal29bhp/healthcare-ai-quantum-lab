@@ -9,7 +9,9 @@ An initial, local-first vertical slice for exploring tabular healthcare research
 - CSV, TSV, XLSX, and XLS uploads, validated by extension and a 20 MB size limit.
 - In-memory dataset profiling: dimensions, missing values, duplicate rows, data types, and descriptive statistics.
 - Random-forest classification and regression baselines with median/most-frequent imputation, categorical one-hot encoding, reproducible train/test splits, configurable seed, and held-out metrics.
-- A local SQLite experiment registry containing timestamp, dataset SHA-256 fingerprint, dimensions, target, model, seed, split sizes, metrics, and software versions. Raw uploads are not written to the registry or disk.
+- Data checks before training: duplicate rows, missing targets, mostly-missing, constant, and identifier-like columns, and possible target leakage (a feature identical to the target, correlated with it at |r| ≥ 0.95, or a low-cardinality feature that determines it exactly).
+- Configurable k-fold cross-validation (default 5 folds, stratified for classification and capped at the smallest class size) reported as mean and standard deviation next to the held-out metrics.
+- A local SQLite experiment registry containing timestamp, dataset SHA-256 fingerprint, dimensions, target, model, seed, split sizes, held-out and `cv_`-prefixed cross-validation metrics, and software versions. Raw uploads are not written to the registry or disk.
 - A synthetic, non-patient sample dataset in `sample_data/`.
 
 ## Run locally
@@ -55,5 +57,6 @@ The local SQLite file created by the app is ignored by Git. Mount a private, enc
 ## Limitations
 
 - The app reads files into process memory and only checks extension/size; it is not a malware scanner or a secure PHI platform.
-- It runs one baseline estimator per task and does not supply feature attribution, cross-validation, model persistence, authentication, or clinical validation.
+- It runs one baseline estimator per task and does not supply feature attribution, hyperparameter search, model persistence, authentication, or clinical validation.
+- Data checks are heuristics: they can miss leakage and can flag legitimately strong predictors, so review each warning.
 - Excel parsing requires the included `openpyxl` dependency and may not support every legacy workbook feature.
