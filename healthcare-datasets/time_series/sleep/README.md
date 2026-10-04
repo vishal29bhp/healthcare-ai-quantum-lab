@@ -7,5 +7,5 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
 | TS-007 | Sleep-EDF Database Expanded | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
-| TS-014 | Apnea-ECG Database | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
+| TS-014 | Apnea-ECG Database | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
 | TS-015 | CAP Sleep Database | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
