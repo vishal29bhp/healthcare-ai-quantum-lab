@@ -1,0 +1,17 @@
+quantum_model,quantum_features,classical_model,classical_features,metric,n_folds,mean_quantum,mean_classical,mean_difference,t_corrected,p_two_sided
+QSVM_IQP_fidelity_kernel,all8,LogisticRegression,all8,balanced_accuracy,25,0.6934,0.7224,-0.02896,-1.733,0.09586
+QSVM_IQP_fidelity_kernel,all8,LogisticRegression,all8,roc_auc,25,0.7964,0.8358,-0.03941,-2.629,0.01472
+QSVM_IQP_fidelity_kernel,all8,SVM_RBF,all8,balanced_accuracy,25,0.6934,0.6996,-0.006169,-0.266,0.7925
+QSVM_IQP_fidelity_kernel,all8,SVM_RBF,all8,roc_auc,25,0.7964,0.8264,-0.03001,-2.315,0.02945
+QSVM_IQP_fidelity_kernel,all8,RandomForest,all8,balanced_accuracy,25,0.6934,0.7299,-0.0365,-1.539,0.1369
+QSVM_IQP_fidelity_kernel,all8,RandomForest,all8,roc_auc,25,0.7964,0.8296,-0.03323,-1.991,0.05804
+QSVM_IQP_fidelity_kernel,all8,HistGradientBoosting,all8,balanced_accuracy,25,0.6934,0.7135,-0.0201,-0.7119,0.4834
+QSVM_IQP_fidelity_kernel,all8,HistGradientBoosting,all8,roc_auc,25,0.7964,0.8105,-0.0141,-0.6768,0.505
+VQC_angle_SEL2,all8,LogisticRegression,all8,balanced_accuracy,25,0.661,0.7224,-0.06135,-2.561,0.01716
+VQC_angle_SEL2,all8,LogisticRegression,all8,roc_auc,25,0.8113,0.8358,-0.02449,-2.476,0.02073
+VQC_angle_SEL2,all8,SVM_RBF,all8,balanced_accuracy,25,0.661,0.6996,-0.03856,-1.508,0.1445
+VQC_angle_SEL2,all8,SVM_RBF,all8,roc_auc,25,0.8113,0.8264,-0.01509,-1.169,0.254
+VQC_angle_SEL2,all8,RandomForest,all8,balanced_accuracy,25,0.661,0.7299,-0.06889,-2.544,0.01783
+VQC_angle_SEL2,all8,RandomForest,all8,roc_auc,25,0.8113,0.8296,-0.01831,-1.242,0.2263
+VQC_angle_SEL2,all8,HistGradientBoosting,all8,balanced_accuracy,25,0.661,0.7135,-0.05248,-1.821,0.08109
+VQC_angle_SEL2,all8,HistGradientBoosting,all8,roc_auc,25,0.8113,0.8105,0.0008179,0.04524,0.9643

@@ -7,6 +7,6 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
 | CLN-009 | Breast Cancer Wisconsin (Diagnostic) | UCI Machine Learning Repository | CC BY 4.0 (Creative Commons Attribution 4.0 International) | Open (no login): None (no login) | Preprocessing validated |
-| CLN-011 | Cervical Cancer (Risk Factors) | UCI Machine Learning Repository | CC BY 4.0 (Creative Commons Attribution 4.0 International) | Open (no login): None (no login) | Access verified |
+| CLN-011 | Cervical Cancer (Risk Factors) | UCI Machine Learning Repository | CC BY 4.0 (Creative Commons Attribution 4.0 International) | Open (no login): None (no login) | Preprocessing validated |
 | CLN-016 | SEER Research Data | NCI Surveillance, Epidemiology, and End Results (SEER) | Not reported (data use agreement terms on registration) | Registration / click-through terms: Research Data: valid email, registration, agree to terms, SEER*Stat account. Research Plus: eRA Commons/HHS account, supervisor/mentor | Access verified |
 | CLN-018 | METABRIC breast cancer (cBioPortal brca_metabric) | cBioPortal | Not reported | Open (no login): None (publicStudy: true) | Source verified |

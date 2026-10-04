@@ -6,5 +6,5 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
-| BIO-003 | gene expression cancer RNA-Seq | UCI Machine Learning Repository (id 401) | CC BY 4.0 | Open (no login) | Access verified |
+| BIO-003 | gene expression cancer RNA-Seq | UCI Machine Learning Repository (id 401) | CC BY 4.0 | Open (no login) | Parsed |
 | BIO-004 | NCBI Gene Expression Omnibus (GEO) | NCBI | Not verified | Open (no login): Not verified | Source verified |

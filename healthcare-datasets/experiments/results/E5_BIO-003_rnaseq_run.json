@@ -1,0 +1,31 @@
+{
+  "experiment": "E5",
+  "dataset_id": "BIO-003",
+  "samples": 801,
+  "genes_raw": 20531,
+  "genes_all_zero": 267,
+  "class_counts": {
+    "BRCA": 300,
+    "COAD": 78,
+    "KIRC": 146,
+    "LUAD": 141,
+    "PRAD": 136
+  },
+  "cv": "StratifiedKFold, 5 folds, seed 42",
+  "preprocessing": "in-fold top-2000 variance genes, StandardScaler; reduced view PCA-8",
+  "quantum_view": "PCA-8 rescaled to [0, pi] on the training fold",
+  "vqc": "5 one-vs-rest binary VQCs (angle encoding, 2 StronglyEntanglingLayers, class-weighted BCE, Adam lr 0.05, batch 32, 30 epochs), scores normalised to sum to 1, argmax",
+  "qsvm": "IQPEmbedding (2 repeats) exact fidelity kernel, multi-class SVC C=1, softmax of OvR decision values",
+  "wall_clock_s": 442.4,
+  "parallel_jobs": 4,
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.44-fc-v64-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.1",
+    "pennylane": "0.45.1",
+    "quantum_device": "default.qubit (noiseless statevector simulator, analytic expectation values)"
+  }
+}

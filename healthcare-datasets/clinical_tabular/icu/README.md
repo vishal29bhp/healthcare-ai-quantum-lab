@@ -7,5 +7,5 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
 | CLN-012 | MIMIC-IV v3.1 | PhysioNet | PhysioNet Credentialed Health Data License 1.5.0 | Credentialed access (training + DUA): PhysioNet credentialed user; CITI 'Data or Specimens Only Research' training; signed DUA | Access verified |
-| CLN-013 | MIMIC-IV Clinical Database Demo | PhysioNet | Open Data Commons Open Database License v1.0 (ODbL) | Open (no login): None; conform to license | Access verified |
+| CLN-013 | MIMIC-IV Clinical Database Demo | PhysioNet | Open Data Commons Open Database License v1.0 (ODbL) | Open (no login): None; conform to license | Parsed |
 | CLN-014 | eICU Collaborative Research Database | PhysioNet | PhysioNet Credentialed Health Data License 1.5.0 | Credentialed access (training + DUA): Credentialed PhysioNet user; CITI Data or Specimens Only Research training; signed DUA | Access verified |

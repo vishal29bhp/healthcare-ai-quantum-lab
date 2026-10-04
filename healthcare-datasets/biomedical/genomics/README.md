@@ -6,6 +6,6 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
-| BIO-001 | Molecular Biology (Splice-junction Gene Sequences) | UCI Machine Learning Repository (id 69) | CC BY 4.0 | Open (no login) | Access verified |
-| BIO-002 | Molecular Biology (Promoter Gene Sequences) | UCI Machine Learning Repository (id 67) | CC BY 4.0 | Open (no login) | Access verified |
+| BIO-001 | Molecular Biology (Splice-junction Gene Sequences) | UCI Machine Learning Repository (id 69) | CC BY 4.0 | Open (no login) | Preprocessing validated |
+| BIO-002 | Molecular Biology (Promoter Gene Sequences) | UCI Machine Learning Repository (id 67) | CC BY 4.0 | Open (no login) | Preprocessing validated |
 | BIO-005 | NCI Genomic Data Commons (GDC) incl. TCGA | NCI GDC | Not reported (GDC 'Data Access Policies' referenced but not quoted) | Controlled access (application / DUA approval): Open tier: no authentication. Controlled tier (low-level sequence data, germline variants, SNP6 genotypes, some clinical): eRA Commons login + dbGaP authorization | Access verified |

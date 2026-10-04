@@ -8,5 +8,5 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 |---|---|---|---|---|---|
 | TS-012 | WESAD (Wearable Stress and Affect Detection) | UCI Machine Learning Repository | Not reported on UCI page (refers to linked dataset for licensing) | Not verified: See linked dataset homepage for terms | Source verified |
 | TS-013 | PPG-DaLiA | UCI Machine Learning Repository | CC BY 4.0 | Open (no login) | Access verified |
-| TS-017 | Non-EEG Dataset for Assessment of Neurological Status | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
-| TS-020 | A Wearable Exam Stress Dataset for Predicting Cognitive Performance in Real-World Settings | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
+| TS-017 | Non-EEG Dataset for Assessment of Neurological Status | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
+| TS-020 | A Wearable Exam Stress Dataset for Predicting Cognitive Performance in Real-World Settings | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
