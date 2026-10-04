@@ -129,3 +129,13 @@ def test_qml_estimates():
     assert est.angle_qubits == 4 and est.zz_feature_map_entanglers == 6
     assert est.simulator_tier.startswith("CPU")
     assert estimate(10, 64, target_qubits=40).simulator_tier.startswith("requires further reduction")
+
+
+def test_read_tabular_json_dict_of_records(tmp_path):
+    from hcds.validate import profile, read_tabular
+
+    path = tmp_path / "qa.json"
+    path.write_text('{"1": {"q": "a?", "ctx": ["x", "y"], "label": "yes"}, "2": {"q": "b?", "ctx": ["z"], "label": "no"}}')
+    frame = read_tabular(path)
+    assert list(frame["id"]) == ["1", "2"] and len(frame) == 2
+    assert profile(frame, "label")["duplicate_rows"] == 0

@@ -62,7 +62,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | NLP-002 | PMC Open Access Subset | Varies per article ('license terms vary'); license type recorded in per-article JSON metadata | open | 2026-10-04 | WebFetch of pmc.ncbi.nlm.nih.gov/tools/openftlist and /tools/pmcaws | Access verified |
 | NLP-003 | MIMIC-IV-Note: Deidentified free-text clinical notes | PhysioNet Credentialed Health Data License 1.5.0 | credentialed | 2026-10-04 | WebFetch of PhysioNet landing page | Access verified |
 | NLP-004 | MedQA (USMLE) | MIT License (repository) | open | 2026-10-04 | WebFetch of GitHub README | Access verified |
-| NLP-005 | PubMedQA | MIT (GitHub repo and HF card) | open | 2026-10-04 | WebFetch of pubmedqa.github.io, GitHub README, HF API JSON + dataset card | Access verified |
+| NLP-005 | PubMedQA | MIT (GitHub repo and HF card) | open | 2026-10-04 | WebFetch of pubmedqa.github.io, GitHub README, HF API JSON + dataset card | Parsed |
 | NLP-006 | MedMCQA | Apache-2.0 (HF card); MIT (GitHub repo) | open | 2026-10-04 | WebFetch of medmcqa.github.io, GitHub README, HF API JSON + card | Access verified |
 | NLP-007 | BioASQ | Not reported | registration | 2026-10-04 | WebFetch of bioasq.org, /participate, /participate/data | Access verified |
 | NLP-008 | n2c2 (formerly i2b2) NLP Research Data Sets | n2c2 Data Use Agreement | controlled | 2026-10-04 | WebFetch of n2c2.dbmi.hms.harvard.edu/data-sets and DBMI portal project page | Access verified |

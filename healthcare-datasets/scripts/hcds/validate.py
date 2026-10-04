@@ -137,6 +137,11 @@ def read_tabular(path: Path, **options) -> pd.DataFrame:
                 return pd.read_csv(io.BytesIO(handle.read()), **options)
     if name.endswith(TABULAR_SUFFIXES):
         return pd.read_csv(path, **options)
+    if name.endswith(".json"):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(data, dict):  # {id: {field: value}} as in PubMedQA; the key becomes an "id" column
+            return pd.DataFrame.from_dict(data, orient="index").rename_axis("id").reset_index()
+        return pd.DataFrame(data)
     if name.endswith(".arff"):
         from scipy.io import arff
 
@@ -154,7 +159,7 @@ def profile(frame: pd.DataFrame, target: str | None = None) -> dict:
         "columns": int(frame.shape[1]),
         "missing_cells": int(frame.isna().sum().sum()),
         "columns_with_missing": {str(k): int(v) for k, v in frame.isna().sum().items() if v},
-        "duplicate_rows": int(frame.duplicated().sum()),
+        "duplicate_rows": int(frame.astype(str).duplicated().sum()),  # str: JSON sources hold list cells
     }
     if target is not None and target in frame.columns:
         summary["class_distribution"] = {str(k): int(v) for k, v in frame[target].value_counts(dropna=False).items()}

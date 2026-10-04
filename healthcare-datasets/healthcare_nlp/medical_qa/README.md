@@ -7,7 +7,7 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
 | NLP-004 | MedQA (USMLE) | GitHub (jind11/MedQA) | MIT License (repository) | Open (no login): None stated | Access verified |
-| NLP-005 | PubMedQA | GitHub / Hugging Face | MIT (GitHub repo and HF card) | Open (no login) | Access verified |
+| NLP-005 | PubMedQA | GitHub / Hugging Face | MIT (GitHub repo and HF card) | Open (no login) | Parsed |
 | NLP-006 | MedMCQA | GitHub / Hugging Face | Apache-2.0 (HF card); MIT (GitHub repo) | Open (no login) | Access verified |
 | NLP-007 | BioASQ | BioASQ Participants Area | Not reported | Registration / click-through terms: Register/login at BioASQ Participants Area | Access verified |
 | NLP-016 | emrQA | GitHub (panushri25/emrQA) | n2c2 DUA | Controlled access (application / DUA approval): Sign n2c2 data use agreement via DBMI portal | Access verified |

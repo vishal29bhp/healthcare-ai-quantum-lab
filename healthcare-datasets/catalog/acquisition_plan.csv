@@ -15,3 +15,16 @@ TS-001,https://www.physionet.org/content/mitdb/get-zip/1.0.0/,mitdb_1.0.0.zip,ht
 TS-009,https://www.physionet.org/content/bidmc/get-zip/1.0.0/,bidmc_1.0.0.zip,https,,,yes,207.7 MB uncompressed
 TS-017,https://www.physionet.org/content/noneeg/get-zip/1.0.0/,noneeg_1.0.0.zip,https,,,yes,3.7 MB uncompressed
 TS-020,https://www.physionet.org/content/wearable-exam-stress/get-zip/1.0.0/,wearable_exam_stress_1.0.0.zip,https,,,yes,82.1 MB uncompressed
+BIO-001,https://archive.ics.uci.edu/static/public/69/molecular+biology+splice+junction+gene+sequences.zip,splice_junction.zip,https,,,yes,"Batch 2 (approved by Vishal 2026-10-04 'go ahead, rich database'); 163 KB; CC BY 4.0"
+BIO-002,https://archive.ics.uci.edu/static/public/67/molecular+biology+promoter+gene+sequences.zip,promoter_sequences.zip,https,,,yes,"Batch 2; 7 KB; CC BY 4.0"
+BIO-003,https://archive.ics.uci.edu/static/public/401/gene+expression+cancer+rna+seq.zip,gene_expression_cancer_rnaseq.zip,https,,,yes,"Batch 2; ~70 MB; CC BY 4.0; enables experiment E5"
+TS-019,https://www.physionet.org/content/challenge-2019/get-zip/1.0.0/,challenge_2019_sepsis.zip,https,,,yes,"Batch 2; CC BY 4.0; ICU sepsis early prediction (hourly vitals/labs)"
+TS-004,https://www.physionet.org/content/challenge-2017/get-zip/1.0.0/,challenge_2017_af.zip,https,,,yes,"Batch 2; ODC-By; ~1.4 GB per page; single-lead AF ECG"
+TS-014,https://www.physionet.org/content/apnea-ecg/get-zip/1.0.0/,apnea_ecg_1.0.0.zip,https,,,yes,"Batch 2; ODC-By; 580.6 MB uncompressed"
+TS-002,https://www.physionet.org/content/ptb-xl/get-zip/1.0.3/,ptb_xl_1.0.3.zip,https,,,yes,"Batch 2; CC BY 4.0; 3.0 GB uncompressed; 12-lead ECG, 21,799 records"
+TS-006,https://www.physionet.org/content/eegmmidb/get-zip/1.0.0/,eegmmidb_1.0.0.zip,https,,,yes,"Batch 2; ODC-By; ZIP 1.9 GB; EEG motor imagery, 109 subjects"
+PH-009,https://data.cdc.gov/api/views/bi63-dtpu/rows.csv?accessType=DOWNLOAD,nchs_leading_causes_of_death.csv,https,,,yes,"Batch 2; public domain; 10,868 rows"
+PH-008,https://data.cdc.gov/api/views/swc5-untb/rows.csv?accessType=DOWNLOAD,places_county_2025.csv,https,,,yes,"Batch 2; public domain; PLACES county estimates"
+PH-014,https://catalog.ourworldindata.org/garden/covid/latest/compact/compact.csv,owid_covid_compact.csv,https,,,yes,"Batch 2; CC BY; archived 2024-08-19"
+PH-015,https://api.worldbank.org/v2/en/topic/8?downloadformat=csv,wdi_health_topic.zip,https,,,yes,"Batch 2; CC BY 4.0; WDI health topic"
+NLP-005,https://raw.githubusercontent.com/pubmedqa/pubmedqa/master/data/ori_pqal.json,pubmedqa_pqal.json,https,,,yes,"Batch 2; MIT; PQA-L 1,000 expert-labelled; file path inferred from the repo layout, so the run will confirm it"
