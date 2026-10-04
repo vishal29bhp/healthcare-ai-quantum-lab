@@ -103,7 +103,7 @@ Generated from `catalog/records/*.json` by `python -m hcds.build_catalog`. Count
 | TS-019 | Early Prediction of Sepsis from Clinical Data: The PhysioNet/Computing in Cardiology Challenge 2019 | icu_vitals | 40,336 patient files (set A 20,336; set B 20,000) | SepsisLabel (Sepsis-3; shifted 6 h earlier) | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified | https://physionet.org/content/challenge-2019/1.0.0/ |
 | TS-020 | A Wearable Exam Stress Dataset for Predicting Cognitive Performance in Real-World Settings | wearable | 30 sessions (10 students x 3 exams) | Exam grades | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed | https://physionet.org/content/wearable-exam-stress/1.0.0/ |
 
-## Public Health (18 datasets)
+## Public Health (21 datasets)
 
 | Dataset ID | Dataset Name | Subcategory | Sample Count | Target | Access Requirements | Verification Status | Canonical URL |
 |---|---|---|---|---|---|---|---|
@@ -125,8 +125,11 @@ Generated from `catalog/records/*.json` by `python -m hcds.build_catalog`. Count
 | PH-016 | CDC/ATSDR Social Vulnerability Index (SVI) | social_determinants | Not reported | Not applicable (aggregate indicators) | Open (no login): None stated | Source verified | https://www.atsdr.cdc.gov/place-health/php/svi/index.html |
 | PH-017 | EPA Air Quality System (AQS) / AirData | social_determinants | Not reported | Not applicable (aggregate indicators) | Open (no login): Files: none; API requires registration (email + key) | Access verified | https://www.epa.gov/outdoor-air-quality-data |
 | PH-018 | DHS Program (Demographic and Health Surveys) | epidemiology | 'over 90 countries from over 300 surveys' | Not applicable (aggregate indicators) | Registration / click-through terms: Registered user; request with project title and analysis description; review in 24-48 h; send resulting publications (PDF) to DHS archive | Access verified | https://dhsprogram.com/data/ |
+| PH-019 | COVID-19 Epidemiological Data (Snowflake share) | epidemiology | 43 tables; ~43.1 million rows in total (largest: JHU_COVID_19_TIMESERIES 12.45M, GOOG_GLOBAL_MOBILITY_REPORT 11.73M) | Not applicable (aggregate indicators) | Controlled access (application / DUA approval): Project owner's Snowflake credentials (SNOWFLAKE_ACCOUNT/USER/PRIVATE_KEY env vars); never redistributed | Access verified | Not reported |
+| PH-020 | Atlas US Healthcare Reference & Affiliations (sample, Snowflake share) | health_services | 13 tables of 100 rows each (vendor sample) | Not applicable | Controlled access (application / DUA approval): Project owner's Snowflake credentials (SNOWFLAKE_ACCOUNT/USER/PRIVATE_KEY env vars); never redistributed | Access verified | Not reported |
+| PH-021 | French National Health and Social Facilities (FINESS, Snowflake share) | health_services | 1 view; 103,004 rows (aggregate profile count) | Not applicable | Controlled access (application / DUA approval): Project owner's Snowflake credentials (SNOWFLAKE_ACCOUNT/USER/PRIVATE_KEY env vars); never redistributed | Access verified | Not reported |
 
-## Medical Text and Healthcare NLP (18 datasets)
+## Medical Text and Healthcare NLP (20 datasets)
 
 | Dataset ID | Dataset Name | Subcategory | Sample Count | Target | Access Requirements | Verification Status | Canonical URL |
 |---|---|---|---|---|---|---|---|
@@ -148,3 +151,5 @@ Generated from `catalog/records/*.json` by `python -m hcds.build_catalog`. Count
 | NLP-016 | emrQA | medical_qa | 1,957,835 QA pairs; 1,225,369 question-logical form pairs; 2,425 clinical notes | Not reported | Controlled access (application / DUA approval): Sign n2c2 data use agreement via DBMI portal | Access verified | https://github.com/panushri25/emrQA |
 | NLP-017 | MTSamples transcribed medical reports | clinical_text | 5043 medical transcription samples | Not reported | Open (no login): None; attribution requested | Source verified | https://mtsamples.com/ |
 | NLP-018 | CORD-19 | biomedical_literature | Over 1 million papers; nearly 370,000 with full text | Not reported | Open (no login) | Access verified | https://github.com/allenai/cord19 |
+| NLP-019 | Drug Vocabulary (Snowflake share) | terminology | ENTRIES 15,235; IDENTIFIERS 20,232; NAMES 49,915 rows | Not applicable | Controlled access (application / DUA approval): Project owner's Snowflake credentials (SNOWFLAKE_ACCOUNT/USER/PRIVATE_KEY env vars); never redistributed | Access verified | Not reported |
+| NLP-020 | PubMed Biomedical Research Corpus, OA commercial subset (Snowflake share) | biomedical_literature | 1 view; 73,916,370 rows (aggregate profile count) | Not applicable | Controlled access (application / DUA approval): Project owner's Snowflake credentials (SNOWFLAKE_ACCOUNT/USER/PRIVATE_KEY env vars); never redistributed | Access verified | Not reported |

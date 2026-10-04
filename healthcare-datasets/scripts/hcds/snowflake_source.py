@@ -40,7 +40,7 @@ log = logging.getLogger("hcds.snowflake")
 DIRECT_ID = re.compile(
     r"(^|_)(first|last|middle|full|given|family|patient|member|mother|father)?_?name($|_)|ssn|social_sec|"
     r"mrn|medical_record|record_num|patient_id|member_id|subscriber|insurance_id|policy_num|account_num|"
-    r"phone|fax|e_?mail|address|street|addr_|zip|postal|postcode|license|licence|vehicle|vin($|_)|"
+    r"phone|fax|e_?mail|address|street|addr_|zip|zcta|postal|postcode|license|licence|vehicle|vin($|_)|"
     r"device_serial|serial_num|url|ip_addr|biometric|photo|image_path|passport|national_id|nhs_num|aadhaar",
     re.I,
 )
@@ -61,8 +61,8 @@ def classify_column(name: str, data_type: str) -> str:
         return "age"
     if DIRECT_ID.search(name):
         return "direct_identifier"
-    if dtype in DATE_TYPES or (DATE_LIKE.search(name) and dtype not in NUMERIC_TYPES):
-        return "date"  # numeric columns such as DEATHS are counts: summarised below, never grouped by value
+    if dtype in DATE_TYPES or (DATE_LIKE.search(name) and dtype in TEXT_TYPES):
+        return "date"  # DEATHS (NUMBER) is a count, LAST_REPORTED_DATE (BOOLEAN) a flag
     if QUASI_ID.search(name):
         return "quasi_identifier"
     if re.search(r"(^|_)id$|_key$|_uuid$|^uuid$|_guid$", name, re.I):

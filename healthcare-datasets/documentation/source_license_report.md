@@ -8,7 +8,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 |---|---|
 | open | 85 |
 | registration | 17 |
-| controlled | 6 |
+| controlled | 11 |
 | credentialed | 5 |
 | unknown | 3 |
 | competition | 1 |
@@ -76,6 +76,8 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | NLP-016 | emrQA | n2c2 DUA | controlled | 2026-10-04 | WebFetch of GitHub README | Access verified |
 | NLP-017 | MTSamples transcribed medical reports | Not reported; may print, share or link for educational purposes with attribution to MTSamples.com | open | 2026-10-04 | WebFetch of mtsamples.com home | Source verified |
 | NLP-018 | CORD-19 | Varies by paper (CC0, CC-BY, Gold OA, Green OA, others) | open | 2026-10-04 | WebFetch of GitHub README | Access verified |
+| NLP-019 | Drug Vocabulary (Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
+| NLP-020 | PubMed Biomedical Research Corpus, OA commercial subset (Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
 | IMG-001 | BraTS 2021 (RSNA-ASNR-MICCAI Brain Tumor Segmentation) | Not reported for data (arXiv paper itself is CC BY 4.0) | registration | 2026-10-04 | WebFetch of UPenn CBICA BraTS 2021 page + arXiv abstract; Synapse page/wiki fetched but returned no dataset details | Access verified |
 | IMG-002 | Brain Tumor MRI Dataset (Nickparvar) | CC BY 4.0 | registration | 2026-10-04 | WebFetch of Kaggle landing page (metadata only) + Kaggle API datasets/view JSON | Access verified |
 | IMG-003 | UPENN-GBM | CC BY 4.0 | open | 2026-10-04 | WebFetch of TCIA collection page | Access verified |
@@ -114,6 +116,9 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | PH-016 | CDC/ATSDR Social Vulnerability Index (SVI) | Not reported | open | 2026-10-04 | WebFetch of SVI landing + data download page | Source verified |
 | PH-017 | EPA Air Quality System (AQS) / AirData | Not reported | open | 2026-10-04 | WebFetch of EPA outdoor air quality page, AirData download files page, AQS API docs | Access verified |
 | PH-018 | DHS Program (Demographic and Health Surveys) | Terms of Use Statement required for GPS, HIV and biomarker datasets | registration | 2026-10-04 | WebFetch of dhsprogram.com/data and Access-Instructions page | Access verified |
+| PH-019 | COVID-19 Epidemiological Data (Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
+| PH-020 | Atlas US Healthcare Reference & Affiliations (sample, Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
+| PH-021 | French National Health and Social Facilities (FINESS, Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
 | TS-001 | MIT-BIH Arrhythmia Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-002 | PTB-XL, a large publicly available electrocardiography dataset | CC BY 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-003 | PTB Diagnostic ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |

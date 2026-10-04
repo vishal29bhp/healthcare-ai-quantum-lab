@@ -695,7 +695,7 @@
   "application": "Open-access biomedical articles for retrieval and literature mining [biomedical literature]",
   "modality": "Article text and metadata (1 view)",
   "file_formats": "Snowflake tables/views; local copy is aggregate Parquet",
-  "sample_count": "1 view; row count in aggregate profile",
+  "sample_count": "1 view; 73,916,370 rows (aggregate profile count)",
   "subject_count": "Not reported",
   "feature_count": "23 columns",
   "target": "Not applicable",
