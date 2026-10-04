@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from healthcare_lab.data import MAX_UPLOAD_BYTES, fingerprint_dataset, load_dataset, profile_dataset
+from healthcare_lab.data import MAX_UPLOAD_BYTES, check_dataset, fingerprint_dataset, load_dataset, profile_dataset
 from healthcare_lab.experiments import run_baseline
 from healthcare_lab.registry import record_experiment
 
@@ -35,17 +35,32 @@ if upload is not None:
         st.subheader("Classical ML baseline")
         target = st.selectbox("Target column", dataset.columns)
         task = st.radio("Task", ["classification", "regression"], horizontal=True)
+        issues = check_dataset(dataset, target)
+        if issues:
+            st.warning("Data checks flagged:\n\n" + "\n".join(f"- {issue}" for issue in issues))
+        else:
+            st.caption("Data checks: no constant, identifier-like, highly missing, or leaking columns found.")
         seed = st.number_input("Random seed", min_value=0, max_value=2_147_483_647, value=42, step=1)
+        cv_folds = st.number_input("Cross-validation folds (0 to skip)", min_value=0, max_value=20, value=5, step=1)
         if st.button("Run baseline", type="primary"):
             try:
-                result = run_baseline(dataset, target, task, int(seed))
+                result = run_baseline(dataset, target, task, int(seed), int(cv_folds))
                 fingerprint = fingerprint_dataset(dataset)
                 record_experiment(Path("experiments.sqlite3"), fingerprint, *dataset.shape, target, result)
             except (ValueError, TypeError) as error:
                 st.error(str(error))
             else:
                 st.success(f"Saved metadata-only experiment record. Dataset fingerprint: `{fingerprint[:12]}…`")
-                st.json({"model": result.model_name, "train_rows": result.train_rows, "test_rows": result.test_rows, "metrics": result.metrics})
+                for note in result.notes:
+                    st.info(note)
+                st.json({
+                    "model": result.model_name,
+                    "train_rows": result.train_rows,
+                    "test_rows": result.test_rows,
+                    "held_out_metrics": result.metrics,
+                    "cv_folds": result.cv_folds,
+                    "cv_metrics": result.cv_metrics,
+                })
 
 st.divider()
 st.header("QML research roadmap")
