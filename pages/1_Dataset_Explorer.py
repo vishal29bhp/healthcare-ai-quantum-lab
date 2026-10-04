@@ -18,10 +18,21 @@ from healthcare_lab.catalogue import (
     table_preview_options,
     zip_members,
 )
+from healthcare_lab.theme import (
+    ACCESS_COLOURS,
+    CATEGORY_ICONS,
+    STATUS_COLOURS,
+    access_badge,
+    apply_theme,
+    banner,
+    cell_style,
+    status_badge,
+)
 
 PREVIEW_ROWS = 200
 
-st.set_page_config(page_title="Dataset Explorer", layout="wide")
+st.set_page_config(page_title="Dataset Explorer", page_icon="🧬", layout="wide")
+apply_theme()
 
 
 @st.cache_data(show_spinner=False)
@@ -122,11 +133,12 @@ def show_detail(cat, dataset_id: str) -> None:
     record = cat.records[dataset_id]
     st.header(f"{dataset_id} · {record['name']}")
     status = catalogue_frame().set_index("ID").loc[dataset_id]
-    a, b, c, d = st.columns(4)
-    a.metric("Status", status["Status"])
-    b.metric("Access", status["Access"])
-    c.metric("Licence family", status["Licence family"])
-    d.metric("Local files", len(cat.local_files(dataset_id)))
+    icon = CATEGORY_ICONS.get(record["category"], "")
+    st.markdown(f"{icon} **{record['category']}** · {record['subcategory']}<br>"
+                + status_badge(status["Status"]) + access_badge(status["Access"]), unsafe_allow_html=True)
+    a, b = st.columns(2)  # status and access are shown as badges above, where long labels fit
+    a.metric("Licence family", status["Licence family"])
+    b.metric("Local files", len(cat.local_files(dataset_id)))
     links = [f"[Landing page]({record['canonical_url']})"]
     if record.get("doi", "").startswith("10."):
         links.append(f"[DOI {record['doi']}](https://doi.org/{record['doi']})")
@@ -205,11 +217,10 @@ def show_detail(cat, dataset_id: str) -> None:
 
 
 st.title("Dataset Explorer")
-st.caption("Browse the 117-dataset healthcare catalogue in healthcare-datasets/. Metadata comes from "
-           "catalog/records; status is derived from the acquisition manifest and validation log.")
-
 cat = catalogue()
 frame = catalogue_frame()
+banner(f"Browse the <b>{len(frame)}-dataset healthcare catalogue</b>: imaging, clinical, molecular, physiological, public health "
+       "and medical text. Status is derived from download and validation evidence, never set by hand.")
 
 with st.sidebar:
     st.header("Filters")
@@ -247,10 +258,14 @@ if view.empty:
 
 with st.expander("Counts by category and status"):
     counts = view.groupby(["Category", "Status"]).size().unstack(fill_value=0)
-    st.bar_chart(counts)
+    counts = counts[[s for s in STATUS_COLOURS if s in counts.columns]]
+    st.bar_chart(counts, color=[STATUS_COLOURS[s][1] for s in counts.columns])
 
-columns = ["ID", "Name", "Category", "Subcategory", "Access", "Licence family", "Status", "Samples", "Size", "Repository"]
-selection = st.dataframe(view[columns], hide_index=True, height=420,
+columns = ["ID", "Name", "Status", "Access", "Category", "Subcategory", "Licence family", "Samples", "Size", "Repository"]
+table = view[columns].assign(Category=view["Category"].map(lambda c: f"{CATEGORY_ICONS.get(c, '')} {c}"))
+styled = (table.style.map(lambda v: cell_style(v, STATUS_COLOURS), subset=["Status"])
+          .map(lambda v: cell_style(v, ACCESS_COLOURS), subset=["Access"]))
+selection = st.dataframe(styled, hide_index=True, height=420,
                          on_select="rerun", selection_mode="single-row", key="catalogue-table")
 st.caption("Select a row to open its record, or pick a dataset below.")
 

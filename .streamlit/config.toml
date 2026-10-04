@@ -1,0 +1,8 @@
+# Clinical colour theme shared by every page of the app.
+[theme]
+base = "light"
+primaryColor = "#0E7C86"              # medical teal: buttons, sliders, selected tabs
+backgroundColor = "#F6FAFB"
+secondaryBackgroundColor = "#E3F1F3"  # sidebar and input fields
+textColor = "#14323A"
+font = "sans serif"
