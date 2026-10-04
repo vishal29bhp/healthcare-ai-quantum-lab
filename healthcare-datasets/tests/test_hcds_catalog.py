@@ -162,6 +162,17 @@ def test_parse_archive_tables_reads_tarball_inside_zip(tmp_path):
     assert result["tables_parsed"] == 2 and result["total_rows"] == 4 and result["total_columns"] == 5
 
 
+def test_expected_size_reads_full_length_from_range_or_length():
+    from types import SimpleNamespace
+
+    from hcds.acquire import expected_size
+
+    partial = SimpleNamespace(status=206, headers={"Content-Range": "bytes 100-199/1000", "Content-Length": "100"})
+    whole = SimpleNamespace(status=200, headers={"Content-Length": "1000"})
+    unknown = SimpleNamespace(status=200, headers={})
+    assert expected_size(partial) == 1000 and expected_size(whole) == 1000 and expected_size(unknown) is None
+
+
 def test_parse_archive_tables_skips_world_bank_preamble(tmp_path):
     import zipfile
 

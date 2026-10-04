@@ -67,12 +67,26 @@ def verify_sha256sums(path: Path) -> tuple[bool, str] | None:
     return ok, f"SHA256SUMS.txt: {listed - mismatched - missing}/{listed} members match ({mismatched} differ, {missing} missing)"
 
 
+def _wfdb_container(archive: zipfile.ZipFile) -> tuple[zipfile.ZipFile, str] | None:
+    """The archive holding the WFDB headers: this one, or a nested training*.zip (Challenge 2017 ships records so)."""
+    if any(m.endswith(".hea") for m in archive.namelist()):
+        return archive, ""
+    for name in archive.namelist():
+        if Path(name).name.lower().startswith("training") and name.lower().endswith(".zip"):
+            inner = zipfile.ZipFile(io.BytesIO(archive.read(name)))
+            if any(m.endswith(".hea") for m in inner.namelist()):
+                return inner, Path(name).name
+    return None
+
+
 def parse_wfdb_archive(path: Path) -> dict | None:
     """Parse every WFDB header in a zip and read one full record's signals. None if the zip has no WFDB records."""
-    with zipfile.ZipFile(path) as archive:
-        headers = sorted(m for m in archive.namelist() if m.endswith(".hea"))
-        if not headers:
+    with zipfile.ZipFile(path) as outer:
+        found = _wfdb_container(outer)
+        if not found:
             return None
+        archive, nested = found
+        headers = sorted(m for m in archive.namelist() if m.endswith(".hea"))
         import tempfile
 
         import wfdb  # optional dependency, only needed for PhysioNet waveform archives
@@ -82,9 +96,35 @@ def parse_wfdb_archive(path: Path) -> dict | None:
             parsed = [wfdb.rdheader(str(Path(tmp) / h[:-4])) for h in headers]
             first = next(h for h, rec in zip(headers, parsed) if rec.n_sig and not getattr(rec, "seg_name", None))
             record = wfdb.rdrecord(str(Path(tmp) / first[:-4]))
-    return {"wfdb_records": len(parsed), "signals": sorted({s for rec in parsed for s in (rec.sig_name or [])})[:20],
-            "sampling_hz": sorted({float(rec.fs) for rec in parsed}),
-            "read_record": Path(first).stem, "read_record_samples": int(record.sig_len),
+    result = {"wfdb_records": len(parsed), "signals": sorted({s for rec in parsed for s in (rec.sig_name or [])})[:20],
+              "sampling_hz": sorted({float(rec.fs) for rec in parsed}),
+              "read_record": Path(first).stem, "read_record_samples": int(record.sig_len),
+              "read_record_nan": int(np.isnan(record.p_signal).sum())}
+    if nested:
+        result["nested_archive"] = nested
+    return result
+
+
+def parse_edf_archive(path: Path) -> dict | None:
+    """Count the EDF recordings in a zip and fully read the first one. None if the zip has no .edf files."""
+    with zipfile.ZipFile(path) as archive:
+        edfs = sorted(m for m in archive.namelist() if m.lower().endswith(".edf"))
+        if not edfs:
+            return None
+        import tempfile
+
+        from wfdb.io.convert.edf import read_edf  # optional dependency, as for WFDB archives
+
+        with tempfile.TemporaryDirectory() as tmp:
+            first = Path(archive.extract(edfs[0], tmp))
+            record = read_edf(str(first), verbose=False)
+    # read_edf reports the frame rate; each signal's rate is frame rate x samples per frame.
+    signals = [(name, float(record.fs) * spf) for name, spf in zip(record.sig_name, record.samps_per_frame)
+               if name != "EDF Annotations"]
+    return {"edf_files": len(edfs), "read_file": edfs[0].split("/", 1)[-1], "signals": len(signals),
+            "example_signals": [name for name, _ in signals[:5]],
+            "sampling_hz": sorted({hz for _, hz in signals}),
+            "read_record_seconds": round(record.sig_len / float(record.fs), 1),
             "read_record_nan": int(np.isnan(record.p_signal).sum())}
 
 
@@ -118,6 +158,8 @@ def parse_archive_tables(path: Path) -> dict | None:
     def tables(archive: zipfile.ZipFile, prefix: str = ""):
         for name in archive.namelist():
             lower = name.lower()
+            if "__macosx/" in lower or Path(name).name.startswith("._"):
+                continue  # macOS resource forks, not data
             if lower.endswith((".csv", ".csv.gz")):
                 yield prefix + name, archive.read(name), "gzip" if lower.endswith(".gz") else None
             elif lower.endswith(".zip") and not prefix:
@@ -233,7 +275,8 @@ def validate_manifest(manifest_path: Path = MANIFEST_PATH, log_path: Path = VALI
         try:
             configured = dataset_id in targets and files.get(dataset_id) in (None, row["requested_files"])
             is_zip = path.name.lower().endswith(".zip")
-            archive = None if configured or not is_zip else (parse_wfdb_archive(path) or parse_archive_tables(path))
+            archive = None if configured or not is_zip else (parse_wfdb_archive(path) or parse_edf_archive(path)
+                                                                   or parse_archive_tables(path))
             if archive:
                 details = json.dumps(archive)[:2000]
             else:

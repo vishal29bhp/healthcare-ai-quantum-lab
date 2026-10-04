@@ -107,6 +107,15 @@ class RateLimiter:
         self._last = time.monotonic()
 
 
+def expected_size(response) -> int | None:
+    """Full file size from Content-Range (on a 206) or Content-Length, or None if the server sends neither."""
+    content_range = response.headers.get("Content-Range", "")
+    if response.status == 206 and "/" in content_range and not content_range.endswith("/*"):
+        return int(content_range.rsplit("/", 1)[1])
+    length = response.headers.get("Content-Length")
+    return int(length) if length and response.status == 200 else None
+
+
 def download_https(url: str, dest: Path, limiter: RateLimiter, retries: int = 4, timeout: int = 60) -> None:
     """Download with resume (HTTP Range on a .part file) and exponential-backoff retries."""
     part = dest.with_suffix(dest.suffix + ".part")
@@ -119,8 +128,12 @@ def download_https(url: str, dest: Path, limiter: RateLimiter, retries: int = 4,
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 mode = "ab" if offset and response.status == 206 else "wb"
+                expected = expected_size(response)
                 with part.open(mode) as handle:
                     shutil.copyfileobj(response, handle, CHUNK)
+            if expected is not None and part.stat().st_size < expected:
+                # A server or proxy that drops a long transfer can end the stream cleanly; resume rather than keep it.
+                raise ConnectionError(f"transfer ended at {part.stat().st_size} of {expected} bytes")
             part.replace(dest)
             return
         except (urllib.error.URLError, TimeoutError, ConnectionError) as error:

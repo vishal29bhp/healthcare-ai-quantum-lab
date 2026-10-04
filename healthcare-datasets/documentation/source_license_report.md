@@ -120,11 +120,11 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | PH-020 | Atlas US Healthcare Reference & Affiliations (sample, Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
 | PH-021 | French National Health and Social Facilities (FINESS, Snowflake share) | Snowflake Marketplace listing terms (not quoted); treated as not redistributable | controlled | 2026-10-04 | Live Snowflake login; INFORMATION_SCHEMA inventory and aggregate profile (snowflake/raw/, git-ignored) | Access verified |
 | TS-001 | MIT-BIH Arrhythmia Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
-| TS-002 | PTB-XL, a large publicly available electrocardiography dataset | CC BY 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-002 | PTB-XL, a large publicly available electrocardiography dataset | CC BY 4.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-003 | PTB Diagnostic ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
-| TS-004 | AF Classification from a Short Single Lead ECG Recording: The PhysioNet/Computing in Cardiology Challenge 2017 | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-004 | AF Classification from a Short Single Lead ECG Recording: The PhysioNet/Computing in Cardiology Challenge 2017 | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-005 | CHB-MIT Scalp EEG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
-| TS-006 | EEG Motor Movement/Imagery Dataset | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-006 | EEG Motor Movement/Imagery Dataset | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-007 | Sleep-EDF Database Expanded | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-008 | Temple University Hospital EEG Corpus (TUEG) and subsets | Not reported (data use agreement form required) | registration | 2026-10-04 | WebFetch of NEDC TUH EEG landing page | Access verified |
 | TS-009 | BIDMC PPG and Respiration Dataset | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
@@ -132,7 +132,7 @@ Licence text is copied from the dataset's own landing page or metadata API. 'Not
 | TS-011 | MIMIC-IV Waveform Database | Open Data Commons Open Database License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-012 | WESAD (Wearable Stress and Affect Detection) | Not reported on UCI page (refers to linked dataset for licensing) | unknown | 2026-10-04 | WebFetch of UCI landing page (UCI API endpoint returned unrelated dataset id 45) | Source verified |
 | TS-013 | PPG-DaLiA | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API endpoint returned unrelated dataset id 45) | Access verified |
-| TS-014 | Apnea-ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
+| TS-014 | Apnea-ECG Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |
 | TS-015 | CAP Sleep Database | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Access verified |
 | TS-016 | Cuff-Less Blood Pressure Estimation | CC BY 4.0 | open | 2026-10-04 | WebFetch of UCI landing page (UCI API endpoint returned unrelated dataset id 45) | Access verified |
 | TS-017 | Non-EEG Dataset for Assessment of Neurological Status | Open Data Commons Attribution License v1.0 | open | 2026-10-04 | WebFetch of PhysioNet project landing page | Parsed |

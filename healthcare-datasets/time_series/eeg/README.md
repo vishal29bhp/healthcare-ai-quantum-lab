@@ -7,5 +7,5 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
 | TS-005 | CHB-MIT Scalp EEG Database | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
-| TS-006 | EEG Motor Movement/Imagery Dataset | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
+| TS-006 | EEG Motor Movement/Imagery Dataset | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
 | TS-008 | Temple University Hospital EEG Corpus (TUEG) and subsets | Neural Engineering Data Consortium (NEDC), Temple University | Not reported (data use agreement form required) | Registration / click-through terms: Signed registration/DUA form emailed to help@nedcdata.org; approval ~24-48 h; SSH key | Access verified |

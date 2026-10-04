@@ -7,7 +7,7 @@ Only files whose licence permits local storage are placed under `raw/` (git-igno
 | Dataset ID | Dataset Name | Repository | License | Access Requirements | Verification Status |
 |---|---|---|---|---|---|
 | TS-001 | MIT-BIH Arrhythmia Database | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
-| TS-002 | PTB-XL, a large publicly available electrocardiography dataset | PhysioNet | CC BY 4.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
+| TS-002 | PTB-XL, a large publicly available electrocardiography dataset | PhysioNet | CC BY 4.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
 | TS-003 | PTB Diagnostic ECG Database | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
-| TS-004 | AF Classification from a Short Single Lead ECG Recording: The PhysioNet/Computing in Cardiology Challenge 2017 | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
+| TS-004 | AF Classification from a Short Single Lead ECG Recording: The PhysioNet/Computing in Cardiology Challenge 2017 | PhysioNet | Open Data Commons Attribution License v1.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Parsed |
 | TS-018 | Icentia11k Single Lead Continuous Raw Electrocardiogram Dataset | PhysioNet | CC BY-NC-SA 4.0 | Open (no login): None; must conform to license terms (PhysioNet open access) | Access verified |
