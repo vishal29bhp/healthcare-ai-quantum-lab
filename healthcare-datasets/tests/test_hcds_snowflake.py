@@ -22,6 +22,8 @@ from hcds.snowflake_source import classify_column  # noqa: E402
     ("ENCOUNTER_KEY", "NUMBER", "direct_identifier"),
     ("DOB", "DATE", "date"),
     ("ADMIT_DATE", "TIMESTAMP_NTZ", "date"),
+    ("DEATHS", "NUMBER", "numeric"),
+    ("BIRTH_DATE", "TEXT", "date"),
     ("AGE", "NUMBER", "age"),
     ("CITY", "TEXT", "quasi_identifier"),
     ("CLINICAL_NOTES", "TEXT", "free_text"),

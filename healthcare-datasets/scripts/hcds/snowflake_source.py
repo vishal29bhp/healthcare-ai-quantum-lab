@@ -61,8 +61,8 @@ def classify_column(name: str, data_type: str) -> str:
         return "age"
     if DIRECT_ID.search(name):
         return "direct_identifier"
-    if dtype in DATE_TYPES or DATE_LIKE.search(name):
-        return "date"
+    if dtype in DATE_TYPES or (DATE_LIKE.search(name) and dtype not in NUMERIC_TYPES):
+        return "date"  # numeric columns such as DEATHS are counts: summarised below, never grouped by value
     if QUASI_ID.search(name):
         return "quasi_identifier"
     if re.search(r"(^|_)id$|_key$|_uuid$|^uuid$|_guid$", name, re.I):
