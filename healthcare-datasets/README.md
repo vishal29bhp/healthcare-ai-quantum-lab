@@ -65,7 +65,8 @@ The brief's `lung_ct`, `brain_mri` and similar folders are present, along with e
 | 9 | Quality and suitability report | `documentation/quality_privacy_licensing.md`, suitability columns in the master catalogue |
 | 10 | Quantum encoding feasibility matrix | `catalog/qml_feasibility_matrix.csv`, `documentation/qml_feasibility.md` |
 | 11 | Classical-versus-quantum plan (and E1 results) | `documentation/experiment_plan.md`, `experiments/results/` |
-| 12 | README | this file |
+| 12 | Data volumes and where each dataset lives (files, Snowflake objects, code that reads it) | `documentation/data_volumes.md`, `catalog/data_volumes.csv` |
+| 13 | README | this file |
 
 The discovery plan, catalogue schema and repository access strategy are in `documentation/discovery_plan.md`.
 
@@ -82,6 +83,7 @@ python -m hcds.pipeline                # fetch approved open rows -> validate ->
 python -m hcds.pipeline --ids CLN-001  # approve and fetch one open dataset explicitly
 python -m hcds.benchmark --dataset-id CLN-009 --name CLN-009_wdbc --folds 5 --qubits 4
 python -m hcds.build_catalog           # regenerate every catalogue output and report
+python -m hcds.volumes                 # refresh the data-volume table (documentation/data_volumes.md)
 pytest -q ../tests                     # offline tests
 ```
 
